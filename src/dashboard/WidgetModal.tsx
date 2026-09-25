@@ -34,7 +34,7 @@ export default function WidgetModal({
     <div className="fixed inset-0 z-50 flex items-center justify-center p-6 animate-fade-in">
       <div
         className="absolute inset-0"
-        style={{ background: "rgba(0,0,0,0.55)", backdropFilter: "blur(32px)", WebkitBackdropFilter: "blur(32px)" }}
+        style={{ background: "rgba(0,0,0,0.45)", backdropFilter: "blur(28px)", WebkitBackdropFilter: "blur(28px)" }}
         onClick={onClose}
       />
       <div

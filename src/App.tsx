@@ -271,11 +271,12 @@ export default function App() {
         </>
       ) : (
         <>
-          {/* Heavier veil for the editorial read */}
-          <div className="absolute inset-0 z-[1] pointer-events-none bg-black/70" />
+          {/* Veil for the editorial read (kept light so the wallpaper stays alive) */}
+          <div className="absolute inset-0 z-[1] pointer-events-none bg-black/40" />
 
-          {/* Masthead */}
-          <header className="absolute top-0 left-0 right-0 z-40 flex items-center justify-between px-8 pt-6 animate-slide-in-down">
+          {/* Masthead (spacer keeps it clear of the AI Agents pill) */}
+          <header className="absolute top-0 left-0 right-0 z-40 flex items-center px-8 pt-6 animate-slide-in-down">
+            {widgets.aiAgentsButton && <div className="w-[168px] flex-shrink-0" />}
             <div className="masthead-text">Suite ———— {mastheadDate}</div>
           </header>
 

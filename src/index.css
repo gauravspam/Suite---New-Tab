@@ -132,7 +132,7 @@ button.widget-frost-light:hover {
 }
 
 .sheet-panel {
-  background: rgba(0, 0, 0, 0.62);
+  background: rgba(0, 0, 0, 0.48);
   backdrop-filter: blur(28px) saturate(1.4);
   -webkit-backdrop-filter: blur(28px) saturate(1.4);
   border-top: 1px solid rgba(255, 255, 255, 0.10);
