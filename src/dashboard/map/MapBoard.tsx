@@ -301,7 +301,7 @@ export default function MapBoard({
                 key={card.id}
                 onPointerDown={(e) => e.stopPropagation()}
                 onDoubleClick={() => openFor(card.id)}
-                className={`absolute surface-translucent map-card rounded-2xl w-[360px] ${dragging ? "map-card-dragging" : ""}`}
+                className={`absolute map-card rounded-2xl w-[360px] ${dragging ? "map-card-dragging" : ""}`}
                 style={{ left: pos.x, top: pos.y, zIndex: dragging ? 100 : 10 + (zMap[card.id] ?? 0) }}
               >
                 <div
