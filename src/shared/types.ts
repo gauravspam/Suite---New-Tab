@@ -14,7 +14,7 @@ export interface DashboardBackgroundSettings {
 }
 
 export interface DashboardDisplaySettings {
-  clockStyle: "modern" | "bold" | "thin" | "outline" | "analog" | "glass" | "serif";
+  clockStyle: "modern" | "bold" | "thin" | "outline" | "analog" | "glass";
   timeFormat: "12h" | "24h";
   showGreeting: boolean;
   customGreeting?: string;
@@ -94,7 +94,7 @@ export interface SuitePrefs {
   holidayCountry?: string;
   defaultSearchEngine?: string;
   weekStartsOn?: "sun" | "mon";
-  layout?: "editorial" | "console" | "terminal" | "map" | "orbit" | "suite";
+  layout?: "console" | "terminal" | "map" | "orbit" | "suite";
 }
 
 export interface DiscardSettings {
@@ -150,7 +150,7 @@ export const DEFAULT_BACKGROUND: DashboardBackgroundSettings = {
 };
 
 export const DEFAULT_DISPLAY: DashboardDisplaySettings = {
-  clockStyle: "serif",
+  clockStyle: "bold",
   timeFormat: "12h",
   showGreeting: true,
   fontSize: 100,

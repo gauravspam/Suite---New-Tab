@@ -9,7 +9,7 @@ import HabitsWidget from "@/dashboard/widgets/Habits";
 import WorldClockWidget from "@/dashboard/widgets/WorldClock";
 import type { SheetWidgetId } from "@/dashboard/useWidgetItems";
 
-// ── Classic centered widget modal (editorial layout + narrow-screen fallback) ──
+// ── Suite v2 standard widget modal ──
 export default function WidgetDialog({
   id,
   onClose,

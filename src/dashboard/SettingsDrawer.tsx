@@ -253,7 +253,7 @@ function DisplayTab() {
       <Card>
         <div className="text-white/70 text-xs font-medium mb-2">Clock Style</div>
         <div className="flex gap-1 flex-wrap">
-          {(["modern", "bold", "thin", "outline", "analog", "glass", "serif"] as const).map((c) => (
+          {(["modern", "bold", "thin", "outline", "analog", "glass"] as const).map((c) => (
             <button key={c} onClick={() => update({ clockStyle: c })} className={`px-3 py-1.5 rounded-lg text-xs capitalize tap-scale ${s.clockStyle === c ? "bg-white/15 text-white" : "bg-white/5 text-white/45"}`}>{c}</button>
           ))}
         </div>
@@ -361,7 +361,7 @@ function PrefsTab() {
       <Card>
         <div className="text-white/70 text-xs font-medium mb-2">Layout</div>
         <div className="flex gap-1.5">
-          {(["console", "editorial", "terminal", "map", "orbit", "suite"] as const).map((l) => (
+          {(["console", "terminal", "map", "orbit", "suite"] as const).map((l) => (
             <button
               key={l}
               onClick={() => update({ layout: l })}
@@ -371,7 +371,7 @@ function PrefsTab() {
             </button>
           ))}
         </div>
-        <p className="text-white/35 text-xs mt-2">Console: sidebar OS + inspector, keyboard-first. Editorial: sheet + hero clock. Terminal: full CLI. Map: draggable canvas board. Orbit: clock sun with satellite widgets. Suite: the original rail + hero clock + dock.</p>
+        <p className="text-white/35 text-xs mt-2">Console: sidebar OS + inspector, keyboard-first (narrow screens use Suite). Terminal: full CLI. Map: draggable canvas board. Orbit: clock sun with satellite widgets. Suite: the original rail + hero clock + dock.</p>
       </Card>
       <Card>
         <div className="text-white/70 text-xs font-medium mb-1">Quick Access Dock</div>

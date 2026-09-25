@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight, Grid, Plus, X } from "lucide-react";
 import BackgroundLayer from "@/dashboard/BackgroundLayer";
 import Clock from "@/dashboard/Clock";
-import Sheet from "@/dashboard/Sheet";
 import type { SheetWidgetId } from "@/dashboard/useWidgetItems";
 import Dock from "@/dashboard/Dock";
 import TopBar from "@/dashboard/TopBar";
@@ -18,7 +17,6 @@ import ConsoleSidebar from "@/dashboard/console/ConsoleSidebar";
 import Inspector from "@/dashboard/console/Inspector";
 import { useConsoleKeys, useWideScreen } from "@/dashboard/console/useConsoleKeys";
 import { useWidgetItems } from "@/dashboard/useWidgetItems";
-import { useNow } from "@/shared/time";
 import { STORAGE_KEYS, useChromeStorage } from "@/shared/storage";
 import { getQuoteForCategory } from "@/shared/quotes";
 import {
@@ -49,7 +47,6 @@ export default function App() {
   const [shortcuts, setShortcuts] = useChromeStorage<Shortcut[]>(STORAGE_KEYS.DASHBOARD_SHORTCUTS, DEFAULT_SHORTCUTS);
 
   const [openWidget, setOpenWidget] = useState<SheetWidgetId | null>(null);
-  const [sheetOpen, setSheetOpen] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [settingsTab, setSettingsTab] = useState<string>("background");
   const [shortcutsOpen, setShortcutsOpen] = useState(false);
@@ -59,7 +56,6 @@ export default function App() {
   const [draft, setDraft] = useState({ name: "", url: "" });
   const [selectedId, setSelectedId] = useState<SheetWidgetId | null>(null);
   const [inspectorOpen, setInspectorOpen] = useState(true);
-  const now = useNow(1000);
 
   const items = useWidgetItems(widgets);
   const effectiveSelected =
@@ -67,11 +63,13 @@ export default function App() {
 
   const wide = useWideScreen(1100);
   const layout = prefs.layout ?? "suite";
-  const isTerminal = layout === "terminal";
-  const isMap = layout === "map";
-  const isOrbit = layout === "orbit";
-  const isSuite = layout === "suite";
-  const isConsole = layout === "console" && wide;
+  // Narrow screens can't fit the console inspector — fall back to suite.
+  // (A stored "editorial" pref from an older build lands on suite the same way.)
+  const effective = layout === "console" && !wide ? "suite" : layout;
+  const isTerminal = effective === "terminal";
+  const isMap = effective === "map";
+  const isOrbit = effective === "orbit";
+  const isConsole = effective === "console";
 
   // Global command-bar hotkey
   useEffect(() => {
@@ -98,7 +96,6 @@ export default function App() {
   if (loading) return <div className="fixed inset-0 bg-black" />;
 
   const quote = getQuoteForCategory(prefs.quoteCategory || "General");
-  const mastheadDate = now.toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric" });
 
   function addShortcut() {
     if (!draft.name.trim() || !draft.url.trim()) return;
@@ -203,19 +200,6 @@ export default function App() {
           <Dock onOpenAll={() => setShortcutsOpen(true)} />
           {openWidget && <WidgetDialog id={openWidget} onClose={() => setOpenWidget(null)} />}
         </>
-      ) : isSuite ? (
-        <>
-          {topBar}
-          <SuiteBoard
-            items={items}
-            display={display}
-            quote={widgets.dailyQuote ? quote : null}
-            dimmed={openWidget !== null}
-            onOpenWidget={setOpenWidget}
-          />
-          <Dock onOpenAll={() => setShortcutsOpen(true)} />
-          {openWidget && <WidgetDialog id={openWidget} onClose={() => setOpenWidget(null)} />}
-        </>
       ) : isConsole ? (
         <>
           <div className="absolute inset-0 z-[1] pointer-events-none bg-black/25" />
@@ -271,27 +255,15 @@ export default function App() {
         </>
       ) : (
         <>
-          {/* Veil for the editorial read (kept light so the wallpaper stays alive) */}
-          <div className="absolute inset-0 z-[1] pointer-events-none bg-black/40" />
-
-          {/* Masthead (spacer keeps it clear of the AI Agents pill) */}
-          <header className="absolute top-0 left-0 right-0 z-40 flex items-center px-8 pt-6 animate-slide-in-down">
-            {widgets.aiAgentsButton && <div className="w-[168px] flex-shrink-0" />}
-            <div className="masthead-text">Suite ———— {mastheadDate}</div>
-          </header>
-
           {topBar}
-
-          {/* Hero: serif clock + quote, bottom-anchored above the sheet */}
-          <main className="absolute inset-0 flex flex-col items-start justify-end px-8 md:px-16 z-10 pointer-events-none pb-[26vh]">
-            {hero}
-          </main>
-
-          <Sheet widgets={widgets} onOpen={setOpenWidget} expanded={sheetOpen} setExpanded={setSheetOpen} />
-          <div className={`transition-opacity duration-300 ${sheetOpen ? "opacity-0 pointer-events-none" : "opacity-100"}`}>
-            <Dock onOpenAll={() => setShortcutsOpen(true)} />
-          </div>
-
+          <SuiteBoard
+            items={items}
+            display={display}
+            quote={widgets.dailyQuote ? quote : null}
+            dimmed={openWidget !== null}
+            onOpenWidget={setOpenWidget}
+          />
+          <Dock onOpenAll={() => setShortcutsOpen(true)} />
           {openWidget && <WidgetDialog id={openWidget} onClose={() => setOpenWidget(null)} />}
         </>
       )}

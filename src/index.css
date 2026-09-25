@@ -126,35 +126,9 @@ button.widget-frost-light:hover {
 }
 .pill:hover { border-color: rgba(255, 255, 255, 0.25); }
 
-/* ── Editorial theme ── */
+/* ── Surfaces ── */
 .font-display {
   font-family: Charter, "Bitstream Charter", "Sitka Text", Georgia, "Times New Roman", serif;
-}
-
-.sheet-panel {
-  background: rgba(0, 0, 0, 0.48);
-  backdrop-filter: blur(28px) saturate(1.4);
-  -webkit-backdrop-filter: blur(28px) saturate(1.4);
-  border-top: 1px solid rgba(255, 255, 255, 0.10);
-  box-shadow: 0 -16px 48px rgba(0, 0, 0, 0.45);
-}
-
-.ghost-row {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
-}
-.ghost-row:last-child { border-bottom: none; }
-
-.hairline {
-  background: rgba(255, 255, 255, 0.12);
-  height: 1px;
-}
-
-.masthead-text {
-  font-size: 11px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.55);
-  font-weight: 500;
 }
 
 .kbd {

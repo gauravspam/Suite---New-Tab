@@ -8,16 +8,14 @@
 
 - Removed to keep four layouts (Console, Terminal, Map, Orbit). Deleted `dashboard/deck/`, theme/density prefs, and the `theme` wallpaper source.
 
-## Direction B — "Editorial": typographic, ghost UI — **BUILT (`layout: editorial`)**
+## Direction B — "Editorial": typographic, ghost UI — **REMOVED**
 
-- No cards at all. Giant serif clock left-aligned, hairline rules, 11px caps labels. Widgets live in a bottom sheet (drag handle) or right drawer; wallpaper heavily dimmed (`black/70`), text is the interface.
-- Implemented as the fallback branch in `App.tsx`: masthead + bottom-anchored serif hero + `Sheet` (peek summaries → half grid → `WidgetDialog` modals) + Dock; shared TopBar, palette, settings drawer and shortcuts modal stay mounted.
-- Pros: most distinct, calm, fast. Cons: widgets hidden by default (extra click), serif taste required, dense data (habits/weather) suffers.
+- Removed alongside the serif clock style. Deleted `dashboard/Sheet.tsx`, the `layout: editorial` option, and the editorial CSS (sheet panel, ghost rows, masthead). Stored `editorial` prefs fall back to suite; stored `serif` clock style falls back to bold.
 
 ## Direction C — "Console": sidebar OS, keyboard-first — **BUILT (`layout: console`)**
 
 - Full-height 280px left sidebar = everything (nav + live summaries + tabs), main area = clock/quote only, right inspector panel shows the selected widget large. Vim-style `j/k` + `/` search.
-- Implemented in `suite-v2` (`suite.prefs.layout`, switchable in Settings → Prefs → Layout; narrow screens <1100px fall back to editorial automatically).
+- Implemented in `suite-v2` (`suite.prefs.layout`, switchable in Settings → Prefs → Layout; narrow screens <1100px fall back to suite automatically).
 
 ## Direction F — "Terminal": full CLI aesthetic — **BUILT (`layout: terminal`)**
 

@@ -655,7 +655,7 @@ const systemCmd: TermCommand = {
 };
 
 const SET_KEYS: Record<string, { parse: (v: string) => unknown; hint: string }> = {
-  layout: { parse: (v) => { if (!["console", "editorial", "terminal", "map", "orbit", "suite"].includes(v)) throw new Error("console|editorial|terminal|map|orbit|suite"); return v; }, hint: "console|editorial|terminal|map|orbit|suite" },
+  layout: { parse: (v) => { if (!["console", "terminal", "map", "orbit", "suite"].includes(v)) throw new Error("console|terminal|map|orbit|suite"); return v; }, hint: "console|terminal|map|orbit|suite" },
   quoteCategory: { parse: (v) => { if (!QUOTE_CATEGORIES[v]) throw new Error(Object.keys(QUOTE_CATEGORIES).join("|")); return v; }, hint: Object.keys(QUOTE_CATEGORIES).join("|") },
   holidayCountry: { parse: (v) => { if (!v) throw new Error("a country name"); return v; }, hint: "<country>" },
   defaultSearchEngine: { parse: (v) => { if (!["Google", "DuckDuckGo", "Bing", "Brave"].includes(v)) throw new Error("Google|DuckDuckGo|Bing|Brave"); return v; }, hint: "Google|DuckDuckGo|Bing|Brave" },
@@ -695,7 +695,7 @@ const setCmd: TermCommand = {
       const value = def.parse(rest.join(" "));
       const next = { ...prefs, [key]: value };
       await setStorage(STORAGE_KEYS.SUITE_PREFS, next);
-      if (key === "layout") ctx.setLayout(value as "console" | "editorial" | "terminal" | "map" | "orbit" | "suite");
+      if (key === "layout") ctx.setLayout(value as "console" | "terminal" | "map" | "orbit" | "suite");
       return [ok(`${key} = ${String(value)}`)];
     } catch (e: any) {
       return [err(`bad value — ${key}: ${e?.message || def.hint}`)];
@@ -706,14 +706,14 @@ const setCmd: TermCommand = {
 const layoutCmd: TermCommand = {
   name: "layout",
   aliases: ["shell", "mode"],
-  usage: "layout [console|editorial|terminal|map|orbit|suite]",
+  usage: "layout [console|terminal|map|orbit|suite]",
   description: "Show or switch the dashboard shell",
   run: async (ctx, args) => {
     const prefs = await getPrefs();
-    if (!args[0]) return [txt(`shell: ${prefs.layout ?? "suite"}`, "bright"), dim("console = sidebar OS · editorial = sheet + hero · terminal = this CLI · map = canvas board · orbit = clock sun + satellites · suite = glass cards + hero clock")];
+    if (!args[0]) return [txt(`shell: ${prefs.layout ?? "suite"}`, "bright"), dim("console = sidebar OS · terminal = this CLI · map = canvas board · orbit = clock sun + satellites · suite = glass cards + hero clock")];
     const v = args[0].toLowerCase();
-    if (!["console", "editorial", "terminal", "map", "orbit", "suite"].includes(v)) return [err("layout console|editorial|terminal|map|orbit|suite")];
-    ctx.setLayout(v as "console" | "editorial" | "terminal" | "map" | "orbit" | "suite");
+    if (!["console", "terminal", "map", "orbit", "suite"].includes(v)) return [err("layout console|terminal|map|orbit|suite")];
+    ctx.setLayout(v as "console" | "terminal" | "map" | "orbit" | "suite");
     return [ok(`shell → ${v}`)];
   },
 };

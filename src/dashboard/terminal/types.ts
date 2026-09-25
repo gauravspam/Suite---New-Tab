@@ -21,7 +21,7 @@ export interface TermCtx {
   openWidget: (id: SheetWidgetId) => void;
   openSettings: (tab?: string) => void;
   openPalette: () => void;
-  setLayout: (l: "console" | "editorial" | "terminal" | "map" | "orbit" | "suite") => void;
+  setLayout: (l: "console" | "terminal" | "map" | "orbit" | "suite") => void;
 }
 
 export interface TermCommand {

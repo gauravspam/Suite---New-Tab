@@ -107,19 +107,6 @@ export default function Clock({ display }: { display: DashboardDisplaySettings }
     );
   }
 
-  if (safe.clockStyle === "serif") {
-    return (
-      <div className="select-none text-left">
-        <div className="font-display italic text-white/70 text-xl mb-1" style={{ textShadow: "0 1px 8px rgba(0,0,0,0.5)" }}>
-          {label.toLowerCase()}
-        </div>
-        <div className="font-display leading-none text-white tabular-nums" style={{ fontSize: size + 80, letterSpacing: "-0.01em", textShadow: "0 2px 24px rgba(0,0,0,0.5)" }}>
-          {hours}<span className="mx-1 opacity-80">:</span>{mins}
-        </div>
-      </div>
-    );
-  }
-
   // bold (default) — gradient reference look
   return (
     <div className="text-center select-none">
