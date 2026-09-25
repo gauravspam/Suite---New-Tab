@@ -179,7 +179,7 @@ export default function App() {
         </>
       ) : isMap ? (
         <>
-          <div className="absolute inset-0 z-[1] pointer-events-none bg-black/40" />
+          <div className="absolute inset-0 z-[1] pointer-events-none bg-black/20" />
           {topBar}
           <MapBoard items={items} widgets={widgets} onOpenWidget={setOpenWidget} />
           <Dock onOpenAll={() => setShortcutsOpen(true)} />
