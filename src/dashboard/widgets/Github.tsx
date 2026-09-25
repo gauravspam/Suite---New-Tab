@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from "react";
-import { GitBranch, ExternalLink, GitCommitHorizontal } from "lucide-react";
+import { GitBranch, ExternalLink, GitCommitHorizontal, RotateCw } from "lucide-react";
 import WidgetModal from "@/dashboard/WidgetModal";
 import { STORAGE_KEYS, useChromeStorage } from "@/shared/storage";
 import { DEFAULT_GITHUB } from "@/shared/types";
@@ -80,6 +80,8 @@ export default function GithubWidget({ onClose, bare }: { onClose: () => void; b
   const [events, setEvents] = useState<GhEvent[] | null>(null);
   const [enriched, setEnriched] = useState<FlatCommit[] | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [updatedAt, setUpdatedAt] = useState<Date | null>(null);
+  const [refreshTick, setRefreshTick] = useState(0);
   const [draft, setDraft] = useState(settings.username || "");
 
   useEffect(() => setDraft(settings.username || ""), [settings.username]);
@@ -140,11 +142,12 @@ export default function GithubWidget({ onClose, bare }: { onClose: () => void; b
         if (!cancelled) {
           const all = lists.flat().sort((a, b) => b.date.getTime() - a.date.getTime());
           setEnriched(all);
+          setUpdatedAt(new Date());
         }
       })
       .catch((e) => { if (!cancelled) setError(e.message || "Failed to load"); });
     return () => { cancelled = true; };
-  }, [settings.username]);
+  }, [settings.username, refreshTick]);
 
   const stats = useMemo(() => {
     if (!events || !enriched) return null;
@@ -202,6 +205,15 @@ export default function GithubWidget({ onClose, bare }: { onClose: () => void; b
               <ExternalLink size={14} />
             </a>
           )}
+          {settings.username && (
+            <button
+              onClick={() => { setEvents(null); setEnriched(null); setError(null); setRefreshTick((t) => t + 1); }}
+              className="w-9 h-9 rounded-xl bg-white/10 hover:bg-white/15 flex items-center justify-center text-white/70 tap-scale"
+              title="Refresh from GitHub"
+            >
+              <RotateCw size={14} />
+            </button>
+          )}
         </div>
 
         {!settings.username && (
@@ -247,7 +259,11 @@ export default function GithubWidget({ onClose, bare }: { onClose: () => void; b
             </div>
             <div className="text-white/30 text-[10px] mb-3">last {WEEKS} weeks · public pushes</div>
 
-            <div className="text-white/40 text-[10px] uppercase tracking-[0.12em] mb-1.5">Recent commits</div>
+            <div className="text-white/40 text-[10px] uppercase tracking-[0.12em] mb-1.5">
+              Recent commits{updatedAt && (
+                <span className="normal-case tracking-normal text-white/30"> · updated {updatedAt.toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" })}</span>
+              )}
+            </div>
             {stats.recent.length === 0 && (
               <div className="text-white/35 text-xs text-center py-3">No pushes in the last 90 days</div>
             )}
