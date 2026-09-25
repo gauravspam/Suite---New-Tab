@@ -181,7 +181,7 @@ export default function App() {
         <>
           <div className="absolute inset-0 z-[1] pointer-events-none bg-black/20" />
           {topBar}
-          <MapBoard items={items} widgets={widgets} onOpenWidget={setOpenWidget} />
+          <MapBoard items={items} widgets={widgets} dimmed={openWidget !== null} onOpenWidget={setOpenWidget} />
           <Dock onOpenAll={() => setShortcutsOpen(true)} />
           {openWidget && <WidgetDialog id={openWidget} onClose={() => setOpenWidget(null)} />}
         </>
