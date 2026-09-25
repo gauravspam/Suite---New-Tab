@@ -1,0 +1,17 @@
+# Deps
+node_modules/
+
+# Build output (load dist/ locally via chrome://extensions, never commit)
+dist/
+
+# Logs / OS junk
+*.log
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Local env / editor
+.env
+.env.local
+.vscode/
+.idea/

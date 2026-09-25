@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Suite v2</title>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{width:320px;min-height:200px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0f0f14;color:#fff}
+    .header{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid rgba(255,255,255,.06)}
+    .header h1{font-size:13px;font-weight:600;letter-spacing:.08em;color:rgba(255,255,255,.7)}
+    .module{padding:12px 16px;border-bottom:1px solid rgba(255,255,255,.04)}
+    .module-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+    .module-title{display:flex;align-items:center;gap:8px}
+    .module-title span{font-size:12px;font-weight:500;color:rgba(255,255,255,.8)}
+    .dot{width:6px;height:6px;border-radius:50%}
+    .toggle{width:36px;height:18px;border-radius:9px;border:none;cursor:pointer;position:relative;transition:background .2s}
+    .toggle.on{background:rgba(59,130,246,.6)}.toggle.off{background:rgba(255,255,255,.1)}
+    .toggle::after{content:'';position:absolute;top:2px;width:14px;height:14px;border-radius:50%;background:#fff;transition:left .2s}
+    .toggle.on::after{left:20px}.toggle.off::after{left:2px}
+    .stats{display:flex;gap:16px;font-size:11px;color:rgba(255,255,255,.4)}
+    .stat-value{color:rgba(255,255,255,.7)}
+    .slider-row{display:flex;align-items:center;gap:8px;margin-top:6px}
+    .slider-row label{font-size:11px;color:rgba(255,255,255,.4);width:55px}
+    .slider-row input[type="range"]{flex:1;-webkit-appearance:none;height:4px;border-radius:2px;background:rgba(255,255,255,.1);outline:none}
+    .slider-row input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:12px;height:12px;border-radius:50%;background:#fff;cursor:pointer}
+    .slider-row span{font-size:11px;color:rgba(255,255,255,.5);width:30px;text-align:right}
+    .footer{padding:10px 16px;text-align:center;font-size:11px;color:rgba(255,255,255,.3)}
+  </style>
+</head>
+<body>
+  <div class="header"><h1>SUITE v2</h1></div>
+  <div class="module">
+    <div class="module-header"><div class="module-title"><div class="dot" style="background:#3b82f6"></div><span>Discard</span></div><button id="dt" class="toggle on"></button></div>
+    <div class="stats"><span>Discarded: <span id="dc" class="stat-value">0</span></span><span>Saved: <span id="ds" class="stat-value">~0MB</span></span></div>
+  </div>
+  <div class="module">
+    <div class="module-header"><div class="module-title"><div class="dot" style="background:#8b5cf6"></div><span>Dimmer</span></div><button id="dmt" class="toggle off"></button></div>
+    <div class="slider-row"><label>Intensity</label><input type="range" id="di" min="0" max="100" value="40"><span id="dv">40%</span></div>
+  </div>
+  <div class="module">
+    <div class="module-header"><div class="module-title"><div class="dot" style="background:#ef4444"></div><span>YT Fullscreen</span></div><button id="yt" class="toggle on"></button></div>
+  </div>
+  <div class="footer">Settings live in the dashboard → gear icon</div>
+  <script src="popup.js"></script>
+</body>
+</html>

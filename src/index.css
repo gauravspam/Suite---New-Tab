@@ -1,0 +1,275 @@
+@import "tailwindcss";
+
+/* ── Suite v2 — "Midnight Glass" tokens ── */
+@theme {
+  --color-ink: #0a0d17;
+  --color-panel: rgba(0, 0, 0, 0.66);
+  --color-chip: rgba(255, 255, 255, 0.05);
+  --color-line: rgba(255, 255, 255, 0.10);
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.15) transparent;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── Surfaces (single recipe, three opacities) ── */
+.surface {
+  background: var(--color-panel);
+  backdrop-filter: blur(28px) saturate(1.4);
+  -webkit-backdrop-filter: blur(28px) saturate(1.4);
+  border: 1px solid var(--color-line);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.10);
+}
+
+.surface-modal {
+  background: rgba(0, 0, 0, 0.82);
+  backdrop-filter: blur(36px) saturate(1.4);
+  -webkit-backdrop-filter: blur(36px) saturate(1.4);
+  border: 1px solid var(--color-line);
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+/* Translucent widget modal — frosted glass. New strategy (25 Sep): the old
+   flat navy base read as solid "blue" because the wallpaper behind is
+   near-black, so blur alone was invisible. This recipe adds a white sheen
+   gradient + brightness lift + rim light so the glass itself is visible,
+   with blur smearing bright streaks behind text. */
+/* Widget surfaces — plain dark blur (no frost makeup: no sheen gradient,
+   no brightness lift, no rim light). Readability comes from the blur itself
+   smearing the wallpaper, while the panel stays transparent. */
+.surface-translucent {
+  background: rgba(0, 0, 0, 0.52);
+  backdrop-filter: blur(28px) saturate(1.4);
+  -webkit-backdrop-filter: blur(28px) saturate(1.4);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.45);
+}
+
+/* Same frost for small widget surfaces (suite cards, orbit satellites) */
+.widget-frost {
+  background: rgba(0, 0, 0, 0.40);
+  backdrop-filter: blur(24px) saturate(1.4);
+  -webkit-backdrop-filter: blur(24px) saturate(1.4);
+  border: 1px solid rgba(255,255,255,0.10);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.40);
+  transition: border-color 0.2s ease, box-shadow 0.25s ease;
+}
+.widget-frost-active {
+  border-color: rgba(255,255,255,0.40);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.40);
+}
+
+/* Plain-blur nav cards (suite rail): translucent base + blur only. */
+.widget-frost-light {
+  background: rgba(0, 0, 0, 0.40);
+  backdrop-filter: blur(24px) saturate(1.4);
+  -webkit-backdrop-filter: blur(24px) saturate(1.4);
+  border: 1px solid rgba(255,255,255,0.10);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+button.widget-frost-light:hover {
+  border-color: rgba(255,255,255,0.25);
+  background: rgba(0, 0, 0, 0.46);
+}
+
+.surface-chip {
+  background: var(--color-chip);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.surface-chip:hover {
+  background: rgba(255, 255, 255, 0.09);
+  border-color: rgba(255, 255, 255, 0.14);
+}
+
+.surface-input {
+  background: rgba(0, 0, 0, 0.30);
+  border: 1px solid var(--color-line);
+  border-radius: 12px;
+  color: #fff;
+}
+.surface-input::placeholder { color: rgba(255, 255, 255, 0.25); }
+.surface-input:focus { outline: none; border-color: rgba(255, 255, 255, 0.25); }
+
+/* Sidebar rail card */
+.rail-card {
+  background: rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(20px) saturate(1.4);
+  -webkit-backdrop-filter: blur(20px) saturate(1.4);
+  border: 1px solid var(--color-line);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.rail-card:hover {
+  background: rgba(0, 0, 0, 0.46);
+  border-color: rgba(255, 255, 255, 0.18);
+}
+
+/* Dark pill (top bar) */
+.pill {
+  background: rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--color-line);
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+.pill:hover { border-color: rgba(255, 255, 255, 0.25); }
+
+/* ── Editorial theme ── */
+.font-display {
+  font-family: Charter, "Bitstream Charter", "Sitka Text", Georgia, "Times New Roman", serif;
+}
+
+.sheet-panel {
+  background: rgba(0, 0, 0, 0.62);
+  backdrop-filter: blur(28px) saturate(1.4);
+  -webkit-backdrop-filter: blur(28px) saturate(1.4);
+  border-top: 1px solid rgba(255, 255, 255, 0.10);
+  box-shadow: 0 -16px 48px rgba(0, 0, 0, 0.45);
+}
+
+.ghost-row {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+.ghost-row:last-child { border-bottom: none; }
+
+.hairline {
+  background: rgba(255, 255, 255, 0.12);
+  height: 1px;
+}
+
+.masthead-text {
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.55);
+  font-weight: 500;
+}
+
+.kbd {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.45);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 5px;
+  padding: 1px 5px;
+  white-space: nowrap;
+}
+
+/* ── Terminal ── */
+.term-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.12) transparent;
+}
+.term-scroll::-webkit-scrollbar { width: 8px; }
+.term-scroll::-webkit-scrollbar-track { background: transparent; }
+.term-scroll::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.12); border-radius: 4px; }
+.term-scroll ::selection {
+  background: rgba(74, 222, 128, 0.25);
+}
+
+/* ── Map board ── */
+.map-grid {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.09) 1px, transparent 1.4px);
+  background-size: 28px 28px;
+}
+.map-card {
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.10);
+}
+.map-card-dragging {
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.14);
+}
+
+/* ── Motion ── */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+@keyframes slideInUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes slideInDown {
+  from { opacity: 0; transform: translateY(-16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+@keyframes scaleInBounce {
+  0% { opacity: 0; transform: scale(0.92); }
+  60% { opacity: 1; transform: scale(1.01); }
+  100% { opacity: 1; transform: scale(1); }
+}
+@keyframes glassSheen {
+  0% { transform: translateX(-120%); opacity: 0; }
+  12% { opacity: 1; }
+  55% { opacity: 1; }
+  70%, 100% { transform: translateX(260%); opacity: 0; }
+}
+.glass-sheen { animation: glassSheen 7s ease-in-out infinite; }
+
+.animate-fade-in { animation: fadeIn 0.4s ease-out forwards; }
+.animate-slide-in-left { animation: slideInLeft 0.4s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
+.animate-slide-in-right { animation: slideInRight 0.4s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
+.animate-slide-in-up { animation: slideInUp 0.4s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
+.animate-slide-in-down { animation: slideInDown 0.4s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
+.animate-scale-in { animation: scaleIn 0.3s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
+.animate-scale-in-bounce { animation: scaleInBounce 0.35s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
+
+.tap-scale { transition: transform 0.12s cubic-bezier(0.2, 0.8, 0.2, 1); }
+.tap-scale:hover { transform: scale(1.03); }
+.tap-scale:active { transform: scale(0.95); }
+
+.focus-ring:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(15, 18, 30, 0.9), 0 0 0 4px rgba(168, 85, 247, 0.6);
+}
+
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 6px;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.15);
+  outline: none;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: white;
+  cursor: pointer;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+}
+input[type="range"]::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: white;
+  cursor: pointer;
+  border: none;
+}

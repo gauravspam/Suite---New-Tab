@@ -1,0 +1,67 @@
+{
+  "manifest_version": 3,
+  "name": "Suite v2",
+  "short_name": "Suite v2",
+  "description": "Suite v2 — unified browsing suite (rebuild): dashboard, tab discard, screen dimmer, YT fullscreen.",
+  "version": "2.0.0",
+  "chrome_url_overrides": {
+    "newtab": "dashboard/index.html"
+  },
+  "background": {
+    "service_worker": "discard/service-worker.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["dimmer/content-script.js"],
+      "css": ["dimmer/content-script.css"],
+      "run_at": "document_idle",
+      "exclude_matches": ["*://*.youtube.com/*"]
+    },
+    {
+      "matches": ["*://*.youtube.com/*"],
+      "js": ["dimmer/content-script.js", "yt-fullscreen/content-script.js"],
+      "css": ["dimmer/content-script.css", "yt-fullscreen/content-script.css"],
+      "run_at": "document_idle"
+    }
+  ],
+  "action": {
+    "default_popup": "popup/index.html",
+    "default_title": "Suite v2"
+  },
+  "permissions": [
+    "tabs",
+    "alarms",
+    "storage",
+    "unlimitedStorage",
+    "activeTab",
+    "contextMenus",
+    "system.memory",
+    "idle"
+  ],
+  "host_permissions": [
+    "https://api.open-meteo.com/*"
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "commands": {
+    "toggle-dimmer": {
+      "suggested_key": { "default": "Alt+Shift+D" },
+      "description": "Toggle Dimmer on/off"
+    },
+    "dimmer-up": {
+      "suggested_key": { "default": "Alt+Shift+Up" },
+      "description": "Increase dimmer intensity"
+    },
+    "dimmer-down": {
+      "suggested_key": { "default": "Alt+Shift+Down" },
+      "description": "Decrease dimmer intensity"
+    },
+    "toggle-yt-fullscreen": {
+      "suggested_key": { "default": "Alt+Shift+F" },
+      "description": "Toggle YT Fullscreen"
+    }
+  }
+}
