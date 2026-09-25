@@ -80,18 +80,53 @@ function SunArc({ rise, set }: SunTimes) {
   const day = nowMin >= r && nowMin <= s;
   const x = 100 - 90 * Math.cos(Math.PI * f);
   const y = 100 - 90 * Math.sin(Math.PI * f);
+  // Night: moon travels the same arc in reverse, sunset → sunrise
+  const nightLen = Math.max(1, (1440 - s) + r);
+  const nf = Math.min(
+    1,
+    Math.max(0, nowMin > s ? (nowMin - s) / nightLen : (nowMin + 1440 - s) / nightLen)
+  );
+  const mx = 100 - 90 * Math.cos(Math.PI * (1 - nf));
+  const my = 100 - 90 * Math.sin(Math.PI * (1 - nf));
+  const stars: [number, number][] = [[40, 30], [70, 18], [130, 22], [160, 34], [100, 12]];
   return (
     <div className="mt-4">
       <div className="text-[10px] text-white/35 uppercase tracking-wider mb-1">Sunrise &amp; sunset</div>
       <svg viewBox="0 0 200 112" className="w-full h-24" aria-hidden>
         <path d="M10,100 A90,90 0 0 1 190,100" fill="none" stroke="rgba(255,255,255,0.15)" strokeWidth="1.5" strokeDasharray="3 4" />
-        <circle
-          cx={x}
-          cy={y}
-          r="5"
-          fill={day ? "#fbbf24" : "rgba(255,255,255,0.35)"}
-          style={day ? { filter: "drop-shadow(0 0 6px rgba(251,191,36,0.8))" } : undefined}
-        />
+        {!day && (
+          <g opacity="0.55">
+            {stars.map(([sx, sy], i) => (
+              <circle key={i} cx={sx} cy={sy} r={i % 2 === 0 ? 1.1 : 0.8} fill="white" />
+            ))}
+          </g>
+        )}
+        {day ? (
+          <circle
+            cx={x}
+            cy={y}
+            r="5"
+            fill="#fbbf24"
+            style={{ filter: "drop-shadow(0 0 6px rgba(251,191,36,0.8))" }}
+          />
+        ) : (
+          <>
+            <defs>
+              <mask id="suite-moon-cut">
+                <circle cx={mx} cy={my} r="6" fill="white" />
+                <circle cx={mx + 2.8} cy={my - 1.8} r="5" fill="black" />
+              </mask>
+            </defs>
+            <circle
+              cx={mx}
+              cy={my}
+              r="6"
+              fill="#dfe6f2"
+              mask="url(#suite-moon-cut)"
+              style={{ filter: "drop-shadow(0 0 7px rgba(223,230,242,0.65))" }}
+            />
+          </>
+        )}
       </svg>
       <div className="flex items-center justify-between -mt-2">
         <span className="flex items-center gap-1 text-[11px] text-white/60 tabular-nums">
