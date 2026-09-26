@@ -36,7 +36,8 @@ export default function ConsoleSidebar({
               aria-selected={selected}
               onClick={() => { onSelect(item.id); onExpand(); }}
               onMouseMove={() => { if (!selected) onSelect(item.id); }}
-              className={`w-full flex items-center gap-3 rounded-xl px-3 py-2.5 text-left transition-colors tap-scale focus-ring ${
+              style={{ animationDelay: `${idx * 40}ms` }}
+              className={`w-full flex items-center gap-3 rounded-xl px-3 py-2.5 text-left transition-colors tap-scale focus-ring animate-slide-in-left ${
                 selected ? "bg-white/10 border border-white/15" : "border border-transparent hover:bg-white/[0.05]"
               }`}
             >
