@@ -31,20 +31,21 @@ export default function WidgetModal({
   if (bare) return <>{children}</>;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-6 animate-fade-in">
+    <>
       <div
-        className="absolute inset-0"
+        className="fixed inset-0 z-40 animate-fade-in"
         style={{ background: "rgba(0,0,0,0.35)", backdropFilter: "blur(20px)", WebkitBackdropFilter: "blur(20px)" }}
         onClick={onClose}
       />
-      <div
-        className={`relative surface-translucent rounded-2xl p-5 overflow-y-auto animate-scale-in-bounce ${
-          wide ? "w-full max-w-3xl max-h-[85vh]" : "w-[400px] max-h-[86vh]"
-        }`}
-        onClick={(e) => e.stopPropagation()}
-        role="dialog"
-        aria-label={title}
-      >
+      <div className="fixed inset-0 z-50 flex items-center justify-center p-6 pointer-events-none">
+        <div
+          className={`pointer-events-auto surface-translucent rounded-2xl p-5 overflow-y-auto animate-scale-in-bounce ${
+            wide ? "w-full max-w-3xl max-h-[85vh]" : "w-[400px] max-h-[86vh]"
+          }`}
+          onClick={(e) => e.stopPropagation()}
+          role="dialog"
+          aria-label={title}
+        >
         <div className="flex items-center justify-between mb-4 animate-slide-in-down">
           <h2 className="text-[15px] text-white/90 font-semibold flex items-center gap-2.5">
             <span className="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center">
@@ -61,7 +62,8 @@ export default function WidgetModal({
           </button>
         </div>
         <div className="text-white/65 text-sm">{children}</div>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
