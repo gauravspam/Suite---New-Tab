@@ -60,6 +60,6 @@ export function useWidgetItems(widgets: DashboardWidgetVisibility): WidgetItem[]
   if (widgets.github) items.push({ id: "github", label: "GitHub", summary: github?.username ? `@${github.username}` : "All Caught Up", icon: GitBranch });
   if (widgets.systemMonitor) items.push({ id: "system", label: "System", summary: stats?.totalDiscardedCount ? `${stats.totalDiscardedCount} freed` : "Tab health", icon: Monitor });
   if (widgets.habits) items.push({ id: "habits", label: "Habits", summary: habits.length > 0 ? `🔥 ${habits.length}` : "Start your first", icon: Flame });
-  if (widgets.worldClock) items.push({ id: "worldClock", label: "World Clock", summary: clocks.length > 0 ? `${clocks.length} clocks` : "No clocks", icon: Globe });
+  if (widgets.worldClock) items.push({ id: "worldClock", label: "World Clock", summary: clocks.length > 0 ? (clocks.length === 1 ? "1 clock" : `${clocks.length} clocks`) : "No clocks", icon: Globe });
   return items;
 }

@@ -35,6 +35,24 @@ export default function Clock({ display }: { display: DashboardDisplaySettings }
           className="relative rounded-full"
           style={{ width: s, height: s, background: "rgba(255,255,255,0.14)", backdropFilter: "blur(22px)", WebkitBackdropFilter: "blur(22px)", border: "1px solid rgba(255,255,255,0.25)", boxShadow: "0 8px 32px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.25)" }}
         >
+          {Array.from({ length: 12 }).map((_, i) => {
+            const a = (i * 30 * Math.PI) / 180;
+            const quarter = i % 3 === 0;
+            const rOuter = s / 2 - 10;
+            const rInner = rOuter - (quarter ? 12 : 7);
+            return (
+              <div
+                key={i}
+                className="absolute left-1/2 top-1/2 rounded-full"
+                style={{
+                  width: quarter ? 3 : 2,
+                  height: quarter ? 3 : 2,
+                  background: quarter ? "rgba(255,255,255,0.85)" : "rgba(255,255,255,0.35)",
+                  transform: `translate(-50%,-50%) translate(${Math.sin(a) * ((rOuter + rInner) / 2)}px, ${-Math.cos(a) * ((rOuter + rInner) / 2)}px)`,
+                }}
+              />
+            );
+          })}
           <div className="absolute left-1/2 top-1/2 bg-white rounded-full origin-bottom" style={{ width: 3, height: "26%", transform: `translate(-50%,-100%) rotate(${hr}deg)` }} />
           <div className="absolute left-1/2 top-1/2 bg-white rounded-full origin-bottom" style={{ width: 2, height: "36%", transform: `translate(-50%,-100%) rotate(${min}deg)` }} />
           <div className="absolute left-1/2 top-1/2 bg-white/70 rounded-full origin-bottom" style={{ width: 1, height: "38%", transform: `translate(-50%,-100%) rotate(${sec}deg)` }} />
