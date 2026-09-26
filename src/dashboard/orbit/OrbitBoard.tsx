@@ -93,8 +93,8 @@ export default function OrbitBoard({
   const n = items.length;
   const cx = vp.w / 2;
   const cy = vp.h * 0.46;
-  const rx = Math.min(vp.w * 0.36, 560);
-  const ry = Math.min(vp.h * 0.34, 380);
+  const rx = Math.min(vp.w * 0.40, 640);
+  const ry = Math.min(vp.h * 0.38, 440);
 
   return (
     <main className="absolute inset-0 z-10 overflow-hidden">
@@ -210,7 +210,7 @@ function Satellite({
       onClick={onOpen}
       onMouseEnter={onFocus}
       onFocus={onFocus}
-      className={`w-44 rounded-2xl p-3 text-left tap-scale focus-ring widget-frost ${active ? "widget-frost-active" : ""}`}
+      className={`w-48 rounded-2xl p-3 text-left tap-scale focus-ring widget-frost ${active ? "widget-frost-active" : ""}`}
     >
       <div className="flex items-center gap-2">
         <span className="w-7 h-7 rounded-lg bg-white/[0.07] flex items-center justify-center flex-shrink-0">
