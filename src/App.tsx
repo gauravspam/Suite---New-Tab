@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { ChevronLeft, ChevronRight, Grid, Plus, Search, X } from "lucide-react";
+import { ChevronLeft, ChevronRight, Grid, Plus, X } from "lucide-react";
 import BackgroundLayer from "@/dashboard/BackgroundLayer";
 import Clock from "@/dashboard/Clock";
 import type { SheetWidgetId } from "@/dashboard/useWidgetItems";
@@ -264,15 +264,6 @@ export default function App() {
             onOpenWidget={setOpenWidget}
           />
           <Dock onOpenAll={() => setShortcutsOpen(true)} />
-          <button
-            onClick={() => setPaletteOpen(true)}
-            title="Search (⌘K)"
-            aria-label="Search"
-            className="pill absolute bottom-6 right-5 z-40 flex items-center gap-2 rounded-full pl-3 pr-4 py-2.5 text-[13px] text-white/75 hover:text-white tap-scale"
-          >
-            <Search size={15} />
-            <span>Search</span>
-          </button>
           {openWidget && <WidgetDialog id={openWidget} onClose={() => setOpenWidget(null)} />}
         </>
       )}

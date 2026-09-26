@@ -7,7 +7,7 @@ Fresh rebuild of the Suite extension from the v1 lessons + `../REDESIGN_PROPOSAL
 - [x] Foundation: toolchain (Vite 7 + React 19 + Tailwind v4), MV3 manifest, `build:ext` pipeline
 - [x] Tokens: Midnight Glass surfaces + motion utilities (`src/index.css`)
 - [x] Shared: storage hook, v2 types/defaults, quote categories, `useNow()` hook, holidays helper
-- [x] Dashboard shell: `BackgroundLayer` + `Clock` (7 styles) + `Sidebar` rail + `Dock` (magnification) + quote
+- [x] Dashboard shell: `BackgroundLayer` + `Clock` (6 styles) + `Sidebar` rail + `Dock` (magnification) + quote
 - [x] P1: `WidgetModal` system + Calendar (42-cell grid, progress, coming-up) / Weather (search, °C/°F, hourly, 5-day) / Tasks / Notes widgets + `SettingsDrawer` (Background/Display/Weather/Widgets/Github/Prefs) + `TopBar` (agents, apps, command, fullscreen, settings) + shortcuts modal
 - [x] P2: pomodoro engine (25/5/15 auto-cycle, ring, sessions, sound + notifications, daily totals), GitHub live (public events, relative time), System live (open/discarded/MB, sparkline history, discard-now), habits week-strip (streaks, colors), world clock (UTC offsets, mini dials, search add)
 - [x] Modules: Discard engine (worker + presets + whitelist + per-site + commands), Dimmer (overlay/media/dark + schedule window + presets + per-site + popup), YT Fullscreen (theater + remember-per-video wired + Esc + 20px button), settings tabs for all three

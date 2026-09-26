@@ -1,4 +1,4 @@
-import { useState, type CSSProperties } from "react";
+import { useState } from "react";
 import { Grid } from "lucide-react";
 import { STORAGE_KEYS, useChromeStorage } from "@/shared/storage";
 import { DEFAULT_SHORTCUTS, DEFAULT_WIDGETS, type SuitePrefs, DEFAULT_SUITE_PREFS, type DashboardWidgetVisibility } from "@/shared/types";
@@ -42,22 +42,20 @@ export default function Dock({ onOpenAll, bottom = "bottom-6" }: { onOpenAll: ()
     return 1 + 0.9 * t * t;
   }
 
-  const tileGlass: CSSProperties = {
-    background: "rgba(0,0,0,0.35)",
-    backdropFilter: "blur(20px) saturate(1.4)",
-    WebkitBackdropFilter: "blur(20px) saturate(1.4)",
-  };
-
   return (
     <div
       className={`absolute ${bottom} left-1/2 -translate-x-1/2 z-40 animate-slide-in-up`}
       onClick={(e) => e.stopPropagation()}
     >
       <div
-        className="flex items-end gap-3"
-        onMouseMove={onMove}
-        onMouseLeave={() => setMagnet(null)}
+        className="rounded-2xl px-3 py-2 flex items-end gap-2.5 border border-white/10"
+        style={{ background: "rgba(0,0,0,0.35)", backdropFilter: "blur(20px) saturate(1.4)", WebkitBackdropFilter: "blur(20px) saturate(1.4)" }}
       >
+        <div
+          className="flex items-end gap-2.5"
+          onMouseMove={onMove}
+          onMouseLeave={() => setMagnet(null)}
+        >
         {list.map((s, idx) => {
           const k = scale(idx);
           return (
@@ -67,9 +65,8 @@ export default function Dock({ onOpenAll, bottom = "bottom-6" }: { onOpenAll: ()
               target="_blank"
               rel="noopener noreferrer"
               title={s.name}
-              className="w-12 h-12 rounded-2xl border border-white/10 flex items-center justify-center"
+              className="w-11 h-11 rounded-xl bg-white/[0.06] hover:bg-white/[0.12] flex items-center justify-center"
               style={{
-                ...tileGlass,
                 transform: `scale(${k}) translateY(${-(k - 1) * 18}px)`,
                 transition: magnet === null ? "transform 0.25s cubic-bezier(0.2,0.8,0.2,1)" : "transform 0.08s linear",
                 transformOrigin: "bottom center",
@@ -85,12 +82,12 @@ export default function Dock({ onOpenAll, bottom = "bottom-6" }: { onOpenAll: ()
             </a>
           );
         })}
+        </div>
         <button
           onClick={onOpenAll}
           onMouseEnter={() => setMagnet(null)}
           title="All shortcuts"
-          className="w-12 h-12 rounded-2xl border border-white/10 flex items-center justify-center text-white/65 hover:text-white/85 tap-scale"
-          style={tileGlass}
+          className="w-11 h-11 rounded-xl bg-white/[0.06] hover:bg-white/[0.12] flex items-center justify-center text-white/65 hover:text-white/85 tap-scale"
         >
           <Grid size={18} />
         </button>
