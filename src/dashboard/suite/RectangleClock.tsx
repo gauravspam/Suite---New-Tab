@@ -1,7 +1,7 @@
-// ── Suite-only "Rectangle" clock ──
-// Frosted glass panel with a mini analog face (hour + minute hands only —
-// NO second hand). The white border is the seconds line: it draws one full
-// lap per minute, gliding smoothly as seconds increase.
+// ── Suite v1 Port: Rectangle Clock ──
+// Frosted glass panel, mini analog face (hour + minute hands, NO second hand).
+// White border draws one lap per minute as the seconds indicator.
+
 import { useNow, periodLabel } from "@/shared/time";
 import { DEFAULT_DISPLAY, type DashboardDisplaySettings } from "@/shared/types";
 
@@ -35,9 +35,9 @@ export default function RectangleClock({ display }: { display: DashboardDisplayS
           <div className="glass-sheen h-full w-1/2 rounded-full" style={{ background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.9), transparent)" }} />
         </div>
         <div className="relative" style={{ width: 90, height: 90 }}>
-          <div className="absolute left-1/2 top-1/2 bg-white rounded-full origin-bottom" style={{ width: 3, height: "32%", transform: `translate(-50%,-100%) rotate(${hr}deg)`, boxShadow: "0 1px 3px rgba(0,0,0,0.3)" }} />
-          <div className="absolute left-1/2 top-1/2 bg-white rounded-full origin-bottom" style={{ width: 2, height: "46%", transform: `translate(-50%,-100%) rotate(${min}deg)`, boxShadow: "0 1px 3px rgba(0,0,0,0.3)" }} />
-          <div className="absolute left-1/2 top-1/2 rounded-full bg-white shadow" style={{ width: 7, height: 7, transform: "translate(-50%,-50%)" }} />
+          <div className="absolute left-1/2 top-1/2 bg-white rounded-full origin-bottom" style={{ width: 3, height: "32%", transform: `translate(-50%,-100%) rotate(${hr}deg)` }} />
+          <div className="absolute left-1/2 top-1/2 bg-white rounded-full origin-bottom" style={{ width: 2, height: "46%", transform: `translate(-50%,-100%) rotate(${min}deg)` }} />
+          <div className="absolute left-1/2 top-1/2 rounded-full bg-white" style={{ width: 7, height: 7, transform: "translate(-50%,-50%)" }} />
         </div>
         <svg className="absolute inset-0 pointer-events-none" width={w} height={h} viewBox={`0 0 ${w} ${h}`}>
           <rect

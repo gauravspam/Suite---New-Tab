@@ -1,9 +1,5 @@
-// ── Suite v2 "Suite" shell: the original first-built dashboard, ported ──
-// Faithful port of the first build (specification folder src/App.tsx → Center +
-// TopBar + BottomDock): floating dark-glass widget cards down the left edge,
-// Frost-style hero clock + greeting + daily quote centered, magnification dock
-// across the bottom. Every feature and storage key stays identical — cards open
-// the shared WidgetDialog, TopBar/Dock/Settings/palette stay mounted by App.
+// ── Suite v1 Port: SuiteBoard ──
+// Main Suite layout combining v1 Center + TopBar + BottomDock + BackgroundLayer
 
 import { useNow } from "@/shared/time";
 import Clock from "@/dashboard/Clock";
@@ -36,7 +32,7 @@ export default function SuiteBoard({
 
   return (
     <>
-      {/* Sidebar widgets — floating frosted-glass cards */}
+      {/* Sidebar widgets — floating dark glass cards */}
       <aside
         className="absolute left-5 top-20 bottom-28 z-30 flex flex-col gap-2 w-[210px] overflow-y-auto"
         onClick={(e) => e.stopPropagation()}
@@ -59,7 +55,7 @@ export default function SuiteBoard({
         ))}
       </aside>
 
-      {/* Center: clock + greeting + quote (fades out while a modal is open so nothing bleeds through the panel) */}
+      {/* Center: clock + greeting + quote */}
       <main className={`absolute inset-0 flex flex-col items-center justify-center px-4 z-10 pointer-events-none transition-opacity duration-300 ${dimmed ? "opacity-0" : "opacity-100"}`}>
         <div className="pointer-events-auto flex flex-col items-center animate-fade-in">
           <div className="animate-slide-in-up" style={{ animationDelay: "100ms" }}>
