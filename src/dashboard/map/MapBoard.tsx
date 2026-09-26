@@ -323,7 +323,12 @@ export default function MapBoard({
                   )}
                 </div>
                 <div className="p-3.5 max-h-[400px] overflow-y-auto text-white/65 text-sm">
-                  {cardBody(card.id)}
+                  <div
+                    className="rounded-xl bg-black/25 px-3 py-2.5"
+                    style={{ backdropFilter: "blur(16px) saturate(1.3)", WebkitBackdropFilter: "blur(16px) saturate(1.3)" }}
+                  >
+                    {cardBody(card.id)}
+                  </div>
                 </div>
               </div>
             );
