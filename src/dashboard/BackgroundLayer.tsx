@@ -18,15 +18,6 @@ function svgFallback(hue: number): string {
 
 const PICSUM_SEED_URL = "https://picsum.photos/seed";
 
-function cacheAge(ts?: number): string {
-  if (!ts) return "";
-  const s = Math.max(0, Math.round((Date.now() - ts) / 1000));
-  if (s < 60) return " · cached just now";
-  if (s < 3600) return ` · cached ${Math.floor(s / 60)}m ago`;
-  if (s < 86400) return ` · cached ${Math.floor(s / 3600)}h ago`;
-  return ` · cached ${Math.floor(s / 86400)}d ago`;
-}
-
 function refreshToMs(interval: DashboardBackgroundSettings["refreshInterval"]): number {
   if (interval === "hour") return 3_600_000;
   if (interval === "day") return 86_400_000;
@@ -205,7 +196,7 @@ export default function BackgroundLayer() {
       )}
       {settings.source === "unsplash" && settings.cachedImageAttribution && (
         <div className="absolute bottom-3 right-4 text-xs text-white/30">
-          {settings.cachedImageAttribution}{cacheAge(settings.lastFetchedAt)}
+          {settings.cachedImageAttribution}
         </div>
       )}
     </div>
