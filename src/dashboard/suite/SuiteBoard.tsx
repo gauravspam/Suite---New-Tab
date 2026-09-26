@@ -44,7 +44,7 @@ export default function SuiteBoard({
           <button
             key={item.id}
             onClick={() => onOpenWidget(item.id)}
-            className="widget-frost-light rounded-2xl p-3 text-left tap-scale focus-ring flex items-center gap-3"
+            className="widget-frost-light rounded-[20px] p-3 text-left tap-scale focus-ring flex items-center gap-3"
             style={{ animation: `slideInLeft 0.4s cubic-bezier(0.2,0.8,0.2,1) ${idx * 60}ms both` }}
           >
             <span className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 bg-white/[0.07]">

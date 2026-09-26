@@ -253,7 +253,7 @@ function DisplayTab() {
       <Card>
         <div className="text-white/70 text-xs font-medium mb-2">Clock Style</div>
         <div className="flex gap-1 flex-wrap">
-          {(["modern", "bold", "thin", "outline", "analog", "glass"] as const).map((c) => (
+          {(["modern", "bold", "thin", "outline", "analog", "glass", "halo"] as const).map((c) => (
             <button key={c} onClick={() => update({ clockStyle: c })} className={`px-3 py-1.5 rounded-lg text-xs capitalize tap-scale ${s.clockStyle === c ? "bg-white/15 text-white" : "bg-white/5 text-white/45"}`}>{c}</button>
           ))}
         </div>
