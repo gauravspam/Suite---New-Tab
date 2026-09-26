@@ -205,7 +205,9 @@ export default function App() {
         <>
           <div className="absolute inset-0 z-[1] pointer-events-none bg-black/25" />
           {topBar}
-          <ConsoleSidebar items={items} selectedId={effectiveSelected} onSelect={setSelectedId} onExpand={() => setInspectorOpen(true)} />
+          <div className={`absolute left-0 top-0 bottom-0 w-[280px] z-30 transition-opacity duration-300 ${openWidget ? "opacity-30" : "opacity-100"}`}>
+            <ConsoleSidebar items={items} selectedId={effectiveSelected} onSelect={setSelectedId} onExpand={() => setInspectorOpen(true)} />
+          </div>
 
           {/* Click empty background to collapse the inspector */}
           <div className="absolute inset-0 z-[5]" onClick={() => setInspectorOpen(false)} />
@@ -220,7 +222,11 @@ export default function App() {
             <Dock onOpenAll={() => setShortcutsOpen(true)} bottom="bottom-14" />
           </div>
 
-          {inspectorOpen && <Inspector id={effectiveSelected} />}
+          {inspectorOpen && (
+            <div className={`absolute right-5 top-20 bottom-14 w-[400px] z-30 transition-opacity duration-300 ${openWidget ? "opacity-30" : "opacity-100"}`}>
+              <Inspector id={effectiveSelected} />
+            </div>
+          )}
 
           {openWidget && <WidgetDialog id={openWidget} onClose={() => setOpenWidget(null)} />}
 

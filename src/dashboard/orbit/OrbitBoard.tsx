@@ -74,7 +74,7 @@ export default function OrbitBoard({
               <div className="mt-1 text-[10px] text-white/40 uppercase tracking-[0.2em]">— {quote.author}</div>
             </div>
           )}
-          <div className="mt-8 grid grid-cols-2 gap-2 w-full max-w-md">
+          <div className={`mt-8 grid grid-cols-2 gap-2 w-full max-w-md transition-opacity duration-300 ${dimmed ? "opacity-30" : "opacity-100"}`}>
             {items.map((item) => (
               <Satellite
                 key={item.id}
@@ -167,23 +167,24 @@ export default function OrbitBoard({
         return (
           <div
             key={item.id}
-            className="absolute animate-fade-in"
+            className="absolute transition-opacity duration-300"
             style={{
               left: cx + rx * Math.cos(a),
               top: cy + ry * Math.sin(a),
               transform: "translate(-50%, -50%)",
               zIndex: active ? 30 : Math.round(10 + depth * 10),
-              animationDelay: `${i * 70}ms`,
-              opacity: 0.72 + 0.28 * depth,
+              opacity: dimmed ? 0.25 : 0.72 + 0.28 * depth,
             }}
           >
-            <div style={{ transform: `scale(${scale})`, transition: "transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1)" }}>
-              <Satellite
-                item={item}
-                active={active}
-                onFocus={() => focus(item.id)}
-                onOpen={() => onOpenWidget(item.id)}
-              />
+            <div className="animate-fade-in" style={{ animationDelay: `${i * 70}ms` }}>
+              <div style={{ transform: `scale(${scale})`, transition: "transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1)" }}>
+                <Satellite
+                  item={item}
+                  active={active}
+                  onFocus={() => focus(item.id)}
+                  onOpen={() => onOpenWidget(item.id)}
+                />
+              </div>
             </div>
           </div>
         );
