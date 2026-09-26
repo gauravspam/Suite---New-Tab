@@ -1,5 +1,9 @@
 import { useState } from "react";
-import { Check, ChevronDown, Coffee, X } from "lucide-react";
+import {
+  Check, ChevronDown, Cloud, Coffee, Download, GitBranch, Image as ImageIcon,
+  LayoutGrid, Monitor, MonitorPlay, Moon, SlidersHorizontal, Trash2, X,
+  type LucideIcon,
+} from "lucide-react";
 import { useChromeStorage, STORAGE_KEYS } from "@/shared/storage";
 import { QUOTE_CATEGORIES } from "@/shared/quotes";
 import {
@@ -28,6 +32,19 @@ const LABELS: Record<TabId, string> = {
   backup: "Backup",
 };
 
+const ICONS: Record<TabId, LucideIcon> = {
+  background: ImageIcon,
+  display: Monitor,
+  weather: Cloud,
+  widgets: LayoutGrid,
+  github: GitBranch,
+  prefs: SlidersHorizontal,
+  discard: Trash2,
+  dimmer: Moon,
+  yt: MonitorPlay,
+  backup: Download,
+};
+
 export default function SettingsDrawer({ onClose, initialTab }: { onClose: () => void; initialTab?: string }) {
   const [tab, setTab] = useState<TabId>(
     (["background", "display", "weather", "widgets", "github", "prefs", "discard", "dimmer", "yt", "backup"] as string[]).includes(initialTab || "")
@@ -36,61 +53,66 @@ export default function SettingsDrawer({ onClose, initialTab }: { onClose: () =>
   );
 
   return (
-    <div className="fixed inset-0 z-50 animate-fade-in">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-6 animate-fade-in">
       <div className="absolute inset-0 bg-black/50 backdrop-blur-md" onClick={onClose} />
-      <aside
-        className="absolute right-0 top-0 h-full w-[430px] max-w-[94vw] flex flex-col border-l border-white/10 animate-slide-in-right"
-        style={{ background: "rgba(22,24,34,0.82)", backdropFilter: "blur(28px) saturate(1.4)", WebkitBackdropFilter: "blur(28px) saturate(1.4)", boxShadow: "-24px 0 64px rgba(0,0,0,0.45)" }}
+      <div
+        className="relative flex w-full max-w-3xl h-[82vh] max-h-[720px] rounded-3xl surface-modal overflow-hidden animate-scale-in-bounce"
+        onClick={(e) => e.stopPropagation()}
+        role="dialog"
+        aria-label="Settings"
       >
-        <div className="flex items-center justify-between px-5 pt-5 pb-3">
-          <h2 className="text-white/90 text-xl font-semibold">Settings</h2>
-          <button onClick={onClose} className="w-8 h-8 rounded-lg hover:bg-white/10 flex items-center justify-center text-white/50 hover:text-white/85 tap-scale" aria-label="Close settings">
-            <X size={18} />
-          </button>
-        </div>
-
-        <div className="px-4 pb-3">
-          <div className="flex gap-1 p-1 rounded-full bg-white/5 border border-white/10 overflow-x-auto">
-            {TABS.map((t) => (
+        {/* Icon rail */}
+        <nav aria-label="Settings sections" className="w-[72px] flex-shrink-0 flex flex-col items-center py-4 gap-1 border-r border-white/10 overflow-y-auto">
+          {TABS.map((t) => {
+            const Icon = ICONS[t];
+            const active = tab === t;
+            return (
               <button
                 key={t}
                 onClick={() => setTab(t)}
-                className={`flex-shrink-0 px-3 py-1.5 rounded-full text-xs font-medium transition-all whitespace-nowrap ${
-                  tab === t ? "bg-white/15 text-white shadow" : "text-white/45 hover:text-white/70 hover:bg-white/5"
+                title={LABELS[t]}
+                aria-label={LABELS[t]}
+                aria-current={active}
+                className={`w-11 h-11 rounded-2xl flex items-center justify-center tap-scale focus-ring flex-shrink-0 transition-colors ${
+                  active ? "bg-white text-black shadow-lg" : "text-white/45 hover:text-white/85 hover:bg-white/10"
                 }`}
               >
-                {LABELS[t]}
+                <Icon size={18} />
               </button>
-            ))}
-          </div>
-        </div>
+            );
+          })}
+        </nav>
 
-        <div className="flex-1 overflow-y-auto px-4 pb-4 space-y-3">
-          <div className="rounded-2xl surface-chip p-4 text-center">
-            <p className="text-white/60 text-xs mb-3">Enjoying Suite? Support updates!</p>
-            <button className="w-full py-2.5 rounded-xl text-sm font-semibold text-yellow-300 bg-yellow-400/10 border border-yellow-400/30 hover:bg-yellow-400/20 transition-colors flex items-center justify-center gap-2 tap-scale">
-              <Coffee size={15} /> Buy me a coffee
+        {/* Content */}
+        <div className="flex-1 flex flex-col min-w-0">
+          <div className="flex items-center justify-between px-5 pt-5 pb-3">
+            <h2 className="text-white/90 text-xl font-semibold">{LABELS[tab]}</h2>
+            <button onClick={onClose} className="w-8 h-8 rounded-lg hover:bg-white/10 flex items-center justify-center text-white/50 hover:text-white/85 tap-scale" aria-label="Close settings">
+              <X size={18} />
             </button>
           </div>
 
-          {tab === "background" && <BackgroundTab />}
-          {tab === "display" && <DisplayTab />}
-          {tab === "weather" && <WeatherTab />}
-          {tab === "widgets" && <WidgetsTab />}
-          {tab === "github" && <GithubTab />}
-          {tab === "prefs" && <PrefsTab />}
-          {tab === "discard" && <DiscardTab />}
-          {tab === "dimmer" && <DimmerTab />}
-          {tab === "yt" && <YtTab />}
-          {tab === "backup" && <BackupTab />}
-        </div>
+          <div className="flex-1 overflow-y-auto px-5 pb-5 space-y-3">
+            <div className="rounded-2xl surface-chip p-4 text-center">
+              <p className="text-white/60 text-xs mb-3">Enjoying Suite? Support updates!</p>
+              <button className="w-full py-2.5 rounded-xl text-sm font-semibold text-yellow-300 bg-yellow-400/10 border border-yellow-400/30 hover:bg-yellow-400/20 transition-colors flex items-center justify-center gap-2 tap-scale">
+                <Coffee size={15} /> Buy me a coffee
+              </button>
+            </div>
 
-        <div className="p-4 pt-2">
-          <button onClick={onClose} className="w-full py-2.5 rounded-xl text-sm font-medium text-white/80 bg-white/10 border border-white/15 hover:bg-white/15 transition-colors tap-scale">
-            Save & Close
-          </button>
+            {tab === "background" && <BackgroundTab />}
+            {tab === "display" && <DisplayTab />}
+            {tab === "weather" && <WeatherTab />}
+            {tab === "widgets" && <WidgetsTab />}
+            {tab === "github" && <GithubTab />}
+            {tab === "prefs" && <PrefsTab />}
+            {tab === "discard" && <DiscardTab />}
+            {tab === "dimmer" && <DimmerTab />}
+            {tab === "yt" && <YtTab />}
+            {tab === "backup" && <BackupTab />}
+          </div>
         </div>
-      </aside>
+      </div>
     </div>
   );
 }
