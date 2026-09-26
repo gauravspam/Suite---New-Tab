@@ -177,7 +177,7 @@ export default function BackgroundLayer() {
               (e.currentTarget as HTMLImageElement).src = fallback;
             }}
           />
-          <div className="absolute inset-0 bg-black/25" />
+          <div className="absolute inset-0 bg-black/10" />
         </>
       )}
       {bgVideo && (
@@ -199,7 +199,7 @@ export default function BackgroundLayer() {
           className="absolute inset-0 pointer-events-none"
           style={{
             background:
-              "radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.3) 100%)",
+              "radial-gradient(ellipse at center, transparent 45%, rgba(0,0,0,0.18) 100%)",
           }}
         />
       )}

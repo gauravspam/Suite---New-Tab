@@ -214,9 +214,9 @@ export default function App() {
             {hero}
           </main>
 
-          {/* Dock scoped to the main area */}
+          {/* Dock scoped to the main area (rides higher to clear the status bar) */}
           <div className={`absolute top-0 bottom-0 left-[280px] ${inspectorOpen ? "right-[440px]" : "right-0"}`}>
-            <Dock onOpenAll={() => setShortcutsOpen(true)} />
+            <Dock onOpenAll={() => setShortcutsOpen(true)} bottom="bottom-14" />
           </div>
 
           {inspectorOpen && <Inspector id={effectiveSelected} />}

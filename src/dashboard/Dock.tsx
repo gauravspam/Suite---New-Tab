@@ -17,7 +17,7 @@ function favicon(url: string) {
   }
 }
 
-export default function Dock({ onOpenAll }: { onOpenAll: () => void }) {
+export default function Dock({ onOpenAll, bottom = "bottom-6" }: { onOpenAll: () => void; bottom?: string }) {
   const [shortcuts] = useChromeStorage<Shortcut[]>(STORAGE_KEYS.DASHBOARD_SHORTCUTS, DEFAULT_SHORTCUTS);
   const [prefs] = useChromeStorage<SuitePrefs>(STORAGE_KEYS.SUITE_PREFS, DEFAULT_SUITE_PREFS);
   const [widgets] = useChromeStorage<DashboardWidgetVisibility>(STORAGE_KEYS.DASHBOARD_WIDGETS, DEFAULT_WIDGETS);
@@ -44,7 +44,7 @@ export default function Dock({ onOpenAll }: { onOpenAll: () => void }) {
 
   return (
     <div
-      className="absolute bottom-20 left-1/2 -translate-x-1/2 z-40 animate-slide-in-up"
+      className={`absolute ${bottom} left-1/2 -translate-x-1/2 z-40 animate-slide-in-up`}
       onClick={(e) => e.stopPropagation()}
     >
       <div
