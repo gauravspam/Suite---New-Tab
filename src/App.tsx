@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { ChevronLeft, ChevronRight, Grid, Plus, Search, X } from "lucide-react";
+import { ChevronLeft, Grid, Plus, Search, X } from "lucide-react";
 import BackgroundLayer from "@/dashboard/BackgroundLayer";
 import Clock from "@/dashboard/Clock";
 import type { SheetWidgetId } from "@/dashboard/useWidgetItems";
@@ -224,22 +224,23 @@ export default function App() {
 
           {inspectorOpen && (
             <div className={`absolute right-5 top-20 bottom-14 w-[400px] z-30 transition-opacity duration-300 ${openWidget ? "opacity-30" : "opacity-100"}`}>
-              <Inspector id={effectiveSelected} />
+              <Inspector id={effectiveSelected} onToggle={() => setInspectorOpen(false)} />
             </div>
           )}
 
           {openWidget && <WidgetDialog id={openWidget} onClose={() => setOpenWidget(null)} />}
 
-          {/* Inspector collapse / expand arrow */}
-          <button
-            onClick={() => setInspectorOpen((v) => !v)}
-            title={inspectorOpen ? "Collapse widget panel" : "Expand widget panel"}
-            aria-label={inspectorOpen ? "Collapse widget panel" : "Expand widget panel"}
-            className="absolute top-1/2 -translate-y-1/2 z-40 w-6 h-16 rounded-l-xl bg-black/50 hover:bg-black/65 border border-r-0 border-white/10 flex items-center justify-center text-white/50 hover:text-white/90 tap-scale"
-            style={{ right: inspectorOpen ? 420 : 0, backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)" }}
-          >
-            {inspectorOpen ? <ChevronRight size={14} /> : <ChevronLeft size={14} />}
-          </button>
+          {!inspectorOpen && (
+            <button
+              onClick={() => setInspectorOpen(true)}
+              title="Expand widget panel"
+              aria-label="Expand widget panel"
+              className="absolute top-1/2 -translate-y-1/2 z-40 w-6 h-16 rounded-l-xl bg-black/50 hover:bg-black/65 border border-r-0 border-white/10 flex items-center justify-center text-white/50 hover:text-white/90 tap-scale"
+              style={{ right: 0, backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)" }}
+            >
+              <ChevronLeft size={14} />
+            </button>
+          )}
 
           {/* Status bar */}
           <footer className="absolute left-[280px] right-0 bottom-0 h-9 z-40 flex items-center justify-between px-5 border-t border-white/10 font-mono text-[11px] text-white/35"
