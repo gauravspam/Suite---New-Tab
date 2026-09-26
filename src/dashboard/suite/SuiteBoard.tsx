@@ -48,12 +48,12 @@ export default function SuiteBoard({
             className="widget-frost-light rounded-2xl p-3 text-left tap-scale focus-ring flex items-center gap-3"
             style={{ animation: `slideInLeft 0.4s cubic-bezier(0.2,0.8,0.2,1) ${idx * 60}ms both` }}
           >
-            <span className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 bg-white/[0.07]">
-              <item.icon size={16} className="text-white/75" />
+            <span className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 bg-white/[0.10]">
+              <item.icon size={16} className="text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.5)]" />
             </span>
             <span className="min-w-0">
-              <span className="block text-[10px] uppercase tracking-[0.12em] text-white/40 font-medium">{item.label}</span>
-              <span className="block text-[13px] text-white/90 font-semibold truncate">{item.summary}</span>
+              <span className="block text-[10px] uppercase tracking-[0.12em] text-white/65 font-semibold drop-shadow-[0_1px_2px_rgba(0,0,0,0.5)]">{item.label}</span>
+              <span className="block text-[13px] text-white font-semibold truncate drop-shadow-[0_1px_3px_rgba(0,0,0,0.55)]">{item.summary}</span>
             </span>
           </button>
         ))}
