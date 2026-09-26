@@ -11,7 +11,6 @@ import WidgetDialog from "@/dashboard/WidgetDialog";
 import MapBoard from "@/dashboard/map/MapBoard";
 import OrbitBoard from "@/dashboard/orbit/OrbitBoard";
 import SuiteBoard from "@/dashboard/suite/SuiteBoard";
-import SuiteDock from "@/dashboard/suite/SuiteDock";
 import Terminal from "@/dashboard/terminal/Terminal";
 import type { TermCtx } from "@/dashboard/terminal/types";
 import ConsoleSidebar from "@/dashboard/console/ConsoleSidebar";
@@ -264,7 +263,7 @@ export default function App() {
             dimmed={openWidget !== null}
             onOpenWidget={setOpenWidget}
           />
-          <SuiteDock onOpenAll={() => setShortcutsOpen(true)} />
+          <Dock onOpenAll={() => setShortcutsOpen(true)} />
           <button
             onClick={() => setPaletteOpen(true)}
             title="Search (⌘K)"
