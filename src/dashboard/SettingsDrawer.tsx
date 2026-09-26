@@ -1,10 +1,10 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   Check, ChevronDown, Cloud, Coffee, Download, GitBranch, Image as ImageIcon,
   LayoutGrid, Monitor, MonitorPlay, Moon, SlidersHorizontal, Trash2, X,
   type LucideIcon,
 } from "lucide-react";
-import { useChromeStorage, STORAGE_KEYS } from "@/shared/storage";
+import { useChromeStorage, getStorage, setStorage, STORAGE_KEYS } from "@/shared/storage";
 import { QUOTE_CATEGORIES } from "@/shared/quotes";
 import {
   DEFAULT_BACKGROUND, DEFAULT_DISPLAY, DEFAULT_GITHUB, DEFAULT_SUITE_PREFS,
@@ -287,7 +287,7 @@ function DisplayTab() {
               ))}
             </div>
           </Row>
-          <Row label="Clock Size"><Slider value={s.fontSize} onChange={(v) => update({ fontSize: v })} min={40} max={160} step={10} unit="px" /></Row>
+          <Row label="Clock Size"><Slider value={s.fontSize} onChange={(v) => update({ fontSize: v })} min={90} max={180} step={10} unit="px" /></Row>
         </div>
       </Card>
       <Card>
@@ -302,7 +302,7 @@ function DisplayTab() {
 
 function WeatherTab() {
   const [s, setS] = useChromeStorage<DashboardWeatherSettings>(STORAGE_KEYS.DASHBOARD_WEATHER, DEFAULT_WEATHER);
-  const update = (p: Partial<DashboardWeatherSettings>) => setS({ ...s, ...p });
+  const update = (p: Partial<DashboardWeatherSettings>) => setS((prev) => ({ ...prev, ...p }));
 
   return (
     <Card>
@@ -413,12 +413,6 @@ function PrefsTab() {
         <div className="text-white/70 text-xs font-medium mt-4 mb-2">Default Search Engine</div>
         <Select value={prefs.defaultSearchEngine || "Google"} onChange={(v) => update({ defaultSearchEngine: v })} options={["Google", "DuckDuckGo", "Bing", "Brave"]} />
       </Card>
-      <Card>
-        <div className="text-white/70 text-xs font-medium mb-1">Debug</div>
-        <Row label="Debug Mode" description="Verbose console logging">
-          <Toggle value={prefs.debug} onChange={(v) => update({ debug: v })} />
-        </Row>
-      </Card>
     </div>
   );
 }
@@ -427,7 +421,12 @@ function PrefsTab() {
 function DiscardTab() {
   const [s, setS] = useChromeStorage<DiscardSettings>(STORAGE_KEYS.DISCARD_SETTINGS, DEFAULT_DISCARD_SETTINGS);
   const [wl, setWl] = useState(s.whitelist.join(", "));
-  const update = (p: Partial<DiscardSettings>) => setS({ ...s, ...p });
+  const wlRef = useRef<HTMLTextAreaElement | null>(null);
+  // Re-sync the draft when storage loads/changes elsewhere (but never while typing)
+  useEffect(() => {
+    if (document.activeElement !== wlRef.current) setWl(s.whitelist.join(", "));
+  }, [s.whitelist]);
+  const update = (p: Partial<DiscardSettings>) => setS((prev) => ({ ...prev, ...p }));
 
   function preset(p: "gentle" | "balanced" | "aggressive") {
     if (p === "gentle") update({ idleMinutes: 30, minInactiveTabsThreshold: 5, gracePeriodSeconds: 120 });
@@ -465,6 +464,7 @@ function DiscardTab() {
         <div className="text-white/70 text-xs font-medium mb-1">Whitelist</div>
         <p className="text-white/35 text-xs mb-2">Comma-separated hostnames to never discard</p>
         <textarea
+          ref={wlRef}
           value={wl}
           onChange={(e) => { setWl(e.target.value); update({ whitelist: e.target.value.split(",").map((x) => x.trim()).filter(Boolean) }); }}
           placeholder="e.g. meet.google.com, docs.google.com"
@@ -595,15 +595,18 @@ function YtTab() {
 }
 
 // ── Backup Tab ──
+// Reads/writes the REAL store (chrome.storage.local in the extension,
+// localStorage on web) — the old version only touched raw localStorage,
+// which is empty in the extension, so export produced {} and import went nowhere.
 function BackupTab() {
   const [status, setStatus] = useState<string | null>(null);
 
-  function doExport() {
+  async function doExport() {
     try {
-      const data: Record<string, string> = {};
-      for (let i = 0; i < localStorage.length; i++) {
-        const key = localStorage.key(i)!;
-        if (/^(dashboard|discard|dimmer|ytFullscreen|suite)\./.test(key)) data[key] = localStorage.getItem(key)!;
+      const data: Record<string, unknown> = {};
+      for (const k of Object.values(STORAGE_KEYS)) {
+        const v = await getStorage<unknown>(k, undefined);
+        if (v !== undefined) data[k] = v;
       }
       const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
       const url = URL.createObjectURL(blob);
@@ -612,7 +615,7 @@ function BackupTab() {
       a.download = "suite-v2-settings.json";
       a.click();
       URL.revokeObjectURL(url);
-      setStatus("Exported.");
+      setStatus(`Exported ${Object.keys(data).length} settings.`);
     } catch {
       setStatus("Export failed.");
     }
@@ -621,12 +624,19 @@ function BackupTab() {
   function doImport(e: React.ChangeEvent<HTMLInputElement>) {
     const f = e.target.files?.[0];
     if (!f) return;
-    f.text().then((text) => {
+    f.text().then(async (text) => {
       try {
-        const data = JSON.parse(text) as Record<string, string>;
+        const data = JSON.parse(text) as Record<string, unknown>;
+        const known = new Set<string>(Object.values(STORAGE_KEYS));
         let n = 0;
         for (const [k, v] of Object.entries(data)) {
-          localStorage.setItem(k, typeof v === "string" ? v : JSON.stringify(v));
+          if (!known.has(k)) continue;
+          // Tolerate legacy exports where values were JSON-encoded strings
+          let value = v;
+          if (typeof v === "string") {
+            try { value = JSON.parse(v); } catch { /* keep raw string */ }
+          }
+          await setStorage(k, value);
           n++;
         }
         setStatus(`Imported ${n} settings. Reload to apply.`);

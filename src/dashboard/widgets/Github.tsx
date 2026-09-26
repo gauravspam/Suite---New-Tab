@@ -242,33 +242,39 @@ export default function GithubWidget({ onClose, bare }: { onClose: () => void; b
               </div>
             </div>
 
-            <div className="grid grid-flow-col grid-rows-7 gap-[3px] mb-1">
-              {stats.days.map((d, i) => (
-                <div
-                  key={i}
-                  title={`${d.date.toLocaleDateString()} — ${d.count} commit${d.count === 1 ? "" : "s"}`}
-                  className="w-full aspect-square rounded-[3px]"
-                  style={{
-                    background:
-                      d.count === 0
-                        ? "rgba(255,255,255,0.07)"
-                        : `rgba(52,211,153,${0.25 + 0.75 * (d.count / stats.max)})`,
-                  }}
-                />
-              ))}
-            </div>
-            <div className="text-white/30 text-[10px] mb-3">last {WEEKS} weeks · public pushes</div>
-
-            <div className="text-white/40 text-[10px] uppercase tracking-[0.12em] mb-1.5">
-              Recent commits{updatedAt && (
-                <span className="normal-case tracking-normal text-white/30"> · updated {updatedAt.toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" })}</span>
-              )}
-            </div>
-            {stats.recent.length === 0 && (
-              <div className="text-white/35 text-xs text-center py-3">No pushes in the last 90 days</div>
+            {settings.showContributions && (
+              <>
+                <div className="grid grid-flow-col grid-rows-7 gap-[3px] mb-1">
+                  {stats.days.map((d, i) => (
+                    <div
+                      key={i}
+                      title={`${d.date.toLocaleDateString()} — ${d.count} commit${d.count === 1 ? "" : "s"}`}
+                      className="w-full aspect-square rounded-[3px]"
+                      style={{
+                        background:
+                          d.count === 0
+                            ? "rgba(255,255,255,0.07)"
+                            : `rgba(52,211,153,${0.25 + 0.75 * (d.count / stats.max)})`,
+                      }}
+                    />
+                  ))}
+                </div>
+                <div className="text-white/30 text-[10px] mb-3">last {WEEKS} weeks · public pushes</div>
+              </>
             )}
-            <div className="space-y-0.5">
-              {stats.recent.map((c) => (
+
+            {settings.showActivity && (
+              <>
+                <div className="text-white/40 text-[10px] uppercase tracking-[0.12em] mb-1.5">
+                  Recent commits{updatedAt && (
+                    <span className="normal-case tracking-normal text-white/30"> · updated {updatedAt.toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" })}</span>
+                  )}
+                </div>
+                {stats.recent.length === 0 && (
+                  <div className="text-white/35 text-xs text-center py-3">No pushes in the last 90 days</div>
+                )}
+                <div className="space-y-0.5">
+                  {stats.recent.map((c) => (
                 <a
                   key={c.sha}
                   href={c.sha.length >= 7 && /^[0-9a-f]+$/i.test(c.sha) ? `https://github.com/${c.repo}/commit/${c.sha}` : `https://github.com/${c.repo}/commits`}
@@ -285,6 +291,8 @@ export default function GithubWidget({ onClose, bare }: { onClose: () => void; b
                 </a>
               ))}
             </div>
+              </>
+            )}
           </>
         )}
       </div>
