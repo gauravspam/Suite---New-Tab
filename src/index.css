@@ -64,17 +64,17 @@ body {
   box-shadow: 0 12px 32px rgba(0,0,0,0.40);
 }
 
-/* Suite rail cards — same v1 card recipe. */
+/* Suite rail cards — v1 card blur + Frost's black outline edge. */
 .widget-frost-light {
   background: rgba(0, 0, 0, 0.35);
   backdrop-filter: blur(20px) saturate(1.4);
   -webkit-backdrop-filter: blur(20px) saturate(1.4);
-  border: 1px solid rgba(255,255,255,0.10);
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+  border: 2px solid rgba(0, 0, 0, 0.55);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45), inset 0 0 0 1px rgba(255,255,255,0.06);
   transition: border-color 0.2s ease, background 0.2s ease;
 }
 button.widget-frost-light:hover {
-  border-color: rgba(255,255,255,0.25);
+  border-color: rgba(0, 0, 0, 0.75);
   background: rgba(0, 0, 0, 0.35);
 }
 
