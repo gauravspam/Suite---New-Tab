@@ -14,7 +14,7 @@ export interface DashboardBackgroundSettings {
 }
 
 export interface DashboardDisplaySettings {
-  clockStyle: "modern" | "bold" | "thin" | "outline" | "analog" | "glass";
+  clockStyle: "modern" | "bold" | "thin" | "outline" | "analog" | "glass" | "rectangle";
   timeFormat: "12h" | "24h";
   showGreeting: boolean;
   customGreeting?: string;

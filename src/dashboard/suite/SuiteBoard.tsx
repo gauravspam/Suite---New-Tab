@@ -7,6 +7,7 @@
 
 import { useNow } from "@/shared/time";
 import Clock from "@/dashboard/Clock";
+import RectangleClock from "@/dashboard/suite/RectangleClock";
 import type { SheetWidgetId, WidgetItem } from "@/dashboard/useWidgetItems";
 import type { DashboardDisplaySettings } from "@/shared/types";
 
@@ -44,7 +45,7 @@ export default function SuiteBoard({
           <button
             key={item.id}
             onClick={() => onOpenWidget(item.id)}
-            className="widget-frost-light rounded-2xl p-3 text-left tap-scale focus-ring flex items-center gap-3"
+            className="widget-frost-light rounded-[20px] p-3 text-left tap-scale focus-ring flex items-center gap-3"
             style={{ animation: `slideInLeft 0.4s cubic-bezier(0.2,0.8,0.2,1) ${idx * 60}ms both` }}
           >
             <span className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 bg-white/[0.07]">
@@ -62,7 +63,7 @@ export default function SuiteBoard({
       <main className={`absolute inset-0 flex flex-col items-center justify-center px-4 z-10 pointer-events-none transition-opacity duration-300 ${dimmed ? "opacity-0" : "opacity-100"}`}>
         <div className="pointer-events-auto flex flex-col items-center animate-fade-in">
           <div className="animate-slide-in-up" style={{ animationDelay: "100ms" }}>
-            <Clock display={display} />
+            {display.clockStyle === "rectangle" ? <RectangleClock display={display} /> : <Clock display={display} />}
           </div>
           {display.showGreeting && (
             <div
