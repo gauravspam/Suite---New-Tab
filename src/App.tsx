@@ -224,7 +224,7 @@ export default function App() {
 
           {inspectorOpen && (
             <div className={`absolute right-5 top-20 bottom-14 w-[400px] z-30 transition-opacity duration-300 ${openWidget ? "opacity-30" : "opacity-100"}`}>
-              <Inspector id={effectiveSelected} onToggle={() => setInspectorOpen(false)} />
+              <Inspector id={effectiveSelected} onToggle={() => setInspectorOpen(false)} tabHidden={openWidget !== null} />
             </div>
           )}
 
@@ -242,8 +242,8 @@ export default function App() {
             </button>
           )}
 
-          {/* Status bar */}
-          <footer className="absolute left-[280px] right-0 bottom-0 h-9 z-40 flex items-center justify-between px-5 border-t border-white/10 font-mono text-[11px] text-white/35"
+          {/* Status bar (recedes with everything else while a modal is open) */}
+          <footer className={`absolute left-[280px] right-0 bottom-0 h-9 z-40 flex items-center justify-between px-5 border-t border-white/10 font-mono text-[11px] text-white/35 transition-opacity duration-300 ${openWidget ? "opacity-30" : "opacity-100"}`}
             style={{ background: "rgba(0,0,0,0.62)", backdropFilter: "blur(24px)", WebkitBackdropFilter: "blur(24px)" }}>
             <span>
               <span className="text-white/60">console</span>

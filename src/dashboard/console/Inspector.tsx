@@ -34,7 +34,7 @@ const ICONS: Record<SheetWidgetId, React.ReactNode> = {
 };
 
 // ── Console inspector: selected widget rendered large, no modal chrome ──
-export default function Inspector({ id, onToggle }: { id: SheetWidgetId | null; onToggle: () => void }) {
+export default function Inspector({ id, onToggle, tabHidden }: { id: SheetWidgetId | null; onToggle: () => void; tabHidden?: boolean }) {
   const noop = () => {};
 
   return (
@@ -44,15 +44,17 @@ export default function Inspector({ id, onToggle }: { id: SheetWidgetId | null; 
       aria-label={id ? WIDGET_TITLES[id] : "Inspector"}
       className="absolute right-5 top-20 bottom-14 w-[400px] z-30 inspector-panel rounded-2xl p-5 overflow-y-auto animate-fade-in focus-ring"
     >
-      <button
-        onClick={onToggle}
-        title="Collapse widget panel"
-        aria-label="Collapse widget panel"
-        className="absolute -left-3 top-1/2 -translate-y-1/2 z-40 w-6 h-16 rounded-xl bg-black/50 hover:bg-black/65 border border-white/10 flex items-center justify-center text-white/50 hover:text-white/90 tap-scale"
-        style={{ backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)" }}
-      >
-        <ChevronRight size={14} />
-      </button>
+      {!tabHidden && (
+        <button
+          onClick={onToggle}
+          title="Collapse widget panel"
+          aria-label="Collapse widget panel"
+          className="absolute -left-3 top-1/2 -translate-y-1/2 z-40 w-6 h-16 rounded-xl bg-black/50 hover:bg-black/65 border border-white/10 flex items-center justify-center text-white/50 hover:text-white/90 tap-scale"
+          style={{ backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)" }}
+        >
+          <ChevronRight size={14} />
+        </button>
+      )}
       {id === null ? (
         <div className="h-full flex items-center justify-center text-white/30 text-sm">
           Select a widget <span className="kbd mx-1">1–9</span> or move with <span className="kbd mx-1">j</span><span className="kbd">k</span>
