@@ -17,7 +17,7 @@ function favicon(url: string) {
   }
 }
 
-export default function Dock({ onOpenAll, bottom = "bottom-6" }: { onOpenAll: () => void; bottom?: string }) {
+export default function Dock({ onOpenAll, bottom = "bottom-6", dimmed = false }: { onOpenAll: () => void; bottom?: string; dimmed?: boolean }) {
   const [shortcuts] = useChromeStorage<Shortcut[]>(STORAGE_KEYS.DASHBOARD_SHORTCUTS, DEFAULT_SHORTCUTS);
   const [prefs] = useChromeStorage<SuitePrefs>(STORAGE_KEYS.SUITE_PREFS, DEFAULT_SUITE_PREFS);
   const [widgets] = useChromeStorage<DashboardWidgetVisibility>(STORAGE_KEYS.DASHBOARD_WIDGETS, DEFAULT_WIDGETS);
@@ -44,9 +44,10 @@ export default function Dock({ onOpenAll, bottom = "bottom-6" }: { onOpenAll: ()
 
   return (
     <div
-      className={`absolute ${bottom} left-1/2 -translate-x-1/2 z-40 animate-slide-in-up`}
+      className={`absolute ${bottom} z-40 transition-opacity duration-300 ${dimmed ? "opacity-10" : "opacity-100"}`}
       onClick={(e) => e.stopPropagation()}
     >
+      <div className="relative left-1/2 -translate-x-1/2 animate-slide-in-up">
       <div
         className="rounded-2xl px-3 py-2 flex items-end gap-2.5 border border-white/10"
         style={{ background: "rgba(0,0,0,0.35)", backdropFilter: "blur(20px) saturate(1.4)", WebkitBackdropFilter: "blur(20px) saturate(1.4)" }}
@@ -91,6 +92,7 @@ export default function Dock({ onOpenAll, bottom = "bottom-6" }: { onOpenAll: ()
         >
           <Grid size={18} />
         </button>
+        </div>
       </div>
     </div>
   );

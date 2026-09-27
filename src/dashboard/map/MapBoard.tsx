@@ -283,7 +283,7 @@ export default function MapBoard({
   }
 
   return (
-    <div className={`absolute inset-0 z-10 overflow-hidden transition-opacity duration-300 ${dimmed ? "opacity-30" : "opacity-100"}`}>
+    <div className={`absolute inset-0 z-10 overflow-hidden transition-opacity duration-300 ${dimmed ? "opacity-10" : "opacity-100"}`}>
       <div
         ref={boardRef}
         onPointerDown={onBoardPointerDown}

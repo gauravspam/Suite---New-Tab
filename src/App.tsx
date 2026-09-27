@@ -181,15 +181,19 @@ export default function App() {
       ) : isMap ? (
         <>
           <div className="absolute inset-0 z-[1] pointer-events-none bg-black/20" />
-          {topBar}
+          <div className={`transition-opacity duration-300 ${openWidget ? "opacity-10" : "opacity-100"}`}>
+            {topBar}
+          </div>
           <MapBoard items={items} widgets={widgets} dimmed={openWidget !== null} onOpenWidget={setOpenWidget} />
-          <Dock onOpenAll={() => setShortcutsOpen(true)} />
+          <Dock onOpenAll={() => setShortcutsOpen(true)} dimmed={openWidget !== null} />
           {openWidget && <WidgetDialog id={openWidget} onClose={() => setOpenWidget(null)} />}
         </>
       ) : isOrbit ? (
         <>
           <div className="absolute inset-0 z-[1] pointer-events-none bg-black/45" />
-          {topBar}
+          <div className={`transition-opacity duration-300 ${openWidget ? "opacity-10" : "opacity-100"}`}>
+            {topBar}
+          </div>
           <OrbitBoard
             items={items}
             display={display}
@@ -198,7 +202,7 @@ export default function App() {
             dimmed={openWidget !== null}
             onOpenWidget={setOpenWidget}
           />
-          <Dock onOpenAll={() => setShortcutsOpen(true)} />
+          <Dock onOpenAll={() => setShortcutsOpen(true)} dimmed={openWidget !== null} />
           {openWidget && <WidgetDialog id={openWidget} onClose={() => setOpenWidget(null)} />}
         </>
       ) : isConsole ? (
@@ -265,7 +269,9 @@ export default function App() {
         </>
       ) : (
         <>
-          {topBar}
+          <div className={`transition-opacity duration-300 ${openWidget ? "opacity-10" : "opacity-100"}`}>
+            {topBar}
+          </div>
           <SuiteBoard
             items={items}
             display={display}
@@ -273,7 +279,9 @@ export default function App() {
             dimmed={openWidget !== null}
             onOpenWidget={setOpenWidget}
           />
-          <SuiteDock onOpenAll={() => setShortcutsOpen(true)} />
+          <div className={`transition-opacity duration-300 ${openWidget ? "opacity-10" : "opacity-100"}`}>
+            <SuiteDock onOpenAll={() => setShortcutsOpen(true)} />
+          </div>
           <button
             onClick={() => setPaletteOpen(true)}
             title="Search (⌘K)"

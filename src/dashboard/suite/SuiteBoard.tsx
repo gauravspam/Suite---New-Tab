@@ -34,7 +34,7 @@ export default function SuiteBoard({
     <>
       {/* Sidebar widgets — floating dark glass cards */}
       <aside
-        className={`absolute left-5 top-20 bottom-28 z-30 flex flex-col gap-2 w-[210px] overflow-y-auto transition-opacity duration-300 ${dimmed ? "opacity-30" : "opacity-100"}`}
+        className={`absolute left-5 top-20 bottom-28 z-30 flex flex-col gap-2 w-[210px] overflow-y-auto transition-opacity duration-300 ${dimmed ? "opacity-10" : "opacity-100"}`}
         onClick={(e) => e.stopPropagation()}
       >
         {items.map((item, idx) => (

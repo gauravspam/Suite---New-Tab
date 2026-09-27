@@ -74,7 +74,7 @@ export default function OrbitBoard({
               <div className="mt-1 text-[10px] text-white/40 uppercase tracking-[0.2em]">— {quote.author}</div>
             </div>
           )}
-          <div className={`mt-8 grid grid-cols-2 gap-2 w-full max-w-md transition-opacity duration-300 ${dimmed ? "opacity-30" : "opacity-100"}`}>
+          <div className={`mt-8 grid grid-cols-2 gap-2 w-full max-w-md transition-opacity duration-300 ${dimmed ? "opacity-10" : "opacity-100"}`}>
             {items.map((item) => (
               <Satellite
                 key={item.id}
@@ -173,7 +173,7 @@ export default function OrbitBoard({
               top: cy + ry * Math.sin(a),
               transform: "translate(-50%, -50%)",
               zIndex: active ? 30 : Math.round(10 + depth * 10),
-              opacity: dimmed ? 0.25 : 0.72 + 0.28 * depth,
+              opacity: dimmed ? 0.10 : 0.72 + 0.28 * depth,
             }}
           >
             <div className="animate-fade-in" style={{ animationDelay: `${i * 70}ms` }}>
