@@ -37,8 +37,8 @@ export default function ConsoleSidebar({
               onClick={() => { onSelect(item.id); onExpand(); }}
               onMouseMove={() => { if (!selected) onSelect(item.id); }}
               style={{ animationDelay: `${idx * 40}ms` }}
-              className={`w-full flex items-center gap-3 rounded-xl px-3 py-2.5 text-left transition-colors tap-scale focus-ring animate-slide-in-left ${
-                selected ? "bg-white/10 border border-white/15" : "border border-transparent hover:bg-white/[0.05]"
+              className={`w-full flex items-center gap-3 rounded-xl px-3 py-2.5 text-left transition-colors tap-scale focus-ring animate-slide-in-left backdrop-blur-md ${
+                selected ? "bg-white/10 border border-white/15" : "border border-white/[0.06] bg-white/[0.04] hover:bg-white/[0.08]"
               }`}
             >
               <span className={`w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 ${selected ? "bg-white/10" : "bg-white/[0.05]"}`}>
@@ -62,7 +62,7 @@ export default function ConsoleSidebar({
       </div>
 
       <div className="px-5 py-3 border-t border-white/10 text-[11px] text-white/30 leading-relaxed font-mono">
-        <span className="kbd">j</span>/<span className="kbd">k</span> move · <span className="kbd">⏎</span> focus · <span className="kbd">/</span> search
+        <span className="kbd">j</span>/<span className="kbd">k</span> move · <span className="kbd">⏎</span> open · <span className="kbd">/</span> search
       </div>
     </nav>
   );

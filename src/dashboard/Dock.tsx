@@ -44,10 +44,10 @@ export default function Dock({ onOpenAll, bottom = "bottom-6", dimmed = false }:
 
   return (
     <div
-      className={`absolute ${bottom} z-40 transition-opacity duration-300 ${dimmed ? "opacity-10" : "opacity-100"}`}
+      className={`absolute ${bottom} inset-x-0 z-40 flex justify-center transition-opacity duration-300 ${dimmed ? "opacity-10" : "opacity-100"}`}
       onClick={(e) => e.stopPropagation()}
     >
-      <div className="relative left-1/2 -translate-x-1/2 animate-slide-in-up">
+      <div className="animate-slide-in-up">
       <div
         className="rounded-2xl px-3 py-2 flex items-end gap-2.5 border border-white/10"
         style={{ background: "rgba(0,0,0,0.35)", backdropFilter: "blur(20px) saturate(1.4)", WebkitBackdropFilter: "blur(20px) saturate(1.4)" }}
