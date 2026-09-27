@@ -37,8 +37,8 @@ export default function ConsoleSidebar({
               onClick={() => { onSelect(item.id); onExpand(); }}
               onMouseMove={() => { if (!selected) onSelect(item.id); }}
               style={{ animationDelay: `${idx * 40}ms` }}
-              className={`w-full flex items-center gap-3 rounded-xl px-3 py-2.5 text-left transition-colors tap-scale focus-ring animate-slide-in-left backdrop-blur-md ${
-                selected ? "bg-white/10 border border-white/15" : "border border-white/[0.06] bg-white/[0.04] hover:bg-white/[0.08]"
+              className={`w-full flex items-center gap-3 rounded-xl px-3 py-2.5 text-left transition-colors tap-scale focus-ring animate-slide-in-left ${
+                selected ? "bg-white/10 border border-white/15" : "border border-transparent hover:bg-white/[0.05]"
               }`}
             >
               <span className={`w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 ${selected ? "bg-white/10" : "bg-white/[0.05]"}`}>
