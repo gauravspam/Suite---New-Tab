@@ -224,7 +224,7 @@ export default function App() {
 
           {inspectorOpen && (
             <div className={`absolute right-5 top-20 bottom-14 w-[400px] z-30 transition-opacity duration-300 ${openWidget ? "opacity-30" : "opacity-100"}`}>
-              <Inspector id={effectiveSelected} onToggle={() => setInspectorOpen(false)} tabHidden={openWidget !== null} />
+              <Inspector id={effectiveSelected} onToggle={() => setInspectorOpen(false)} />
             </div>
           )}
 
