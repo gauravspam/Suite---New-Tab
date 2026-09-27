@@ -15,7 +15,7 @@ export default function ConsoleSidebar({
   return (
     <nav
       aria-label="Widgets"
-      className="absolute left-0 top-0 bottom-0 w-[280px] z-30 flex flex-col border-r border-white/10 animate-slide-in-left"
+      className="absolute left-0 top-0 bottom-0 w-[240px] z-30 flex flex-col border-r border-white/10 animate-slide-in-left"
       style={{ background: "rgba(0,0,0,0.62)", backdropFilter: "blur(24px) saturate(1.4)", WebkitBackdropFilter: "blur(24px) saturate(1.4)" }}
     >
       <div className="px-5 pt-6 pb-4 flex items-center gap-2.5">

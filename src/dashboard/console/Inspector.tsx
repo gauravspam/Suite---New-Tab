@@ -42,7 +42,7 @@ export default function Inspector({ id, onToggle }: { id: SheetWidgetId | null; 
       data-inspector
       tabIndex={-1}
       aria-label={id ? WIDGET_TITLES[id] : "Inspector"}
-      className="absolute right-5 top-20 bottom-14 w-[400px] z-30 inspector-panel rounded-2xl p-5 overflow-y-auto animate-fade-in focus-ring"
+      className="absolute right-5 top-20 bottom-14 w-[340px] z-30 inspector-panel rounded-2xl p-5 overflow-y-auto animate-fade-in focus-ring"
     >
       <button
         onClick={onToggle}

@@ -119,7 +119,7 @@ export default function App() {
       showCommand={prefs.showCommandBarButton ?? false}
       onOpenPalette={() => setPaletteOpen(true)}
       onOpenSettings={() => { setSettingsTab("background"); setSettingsOpen(true); }}
-      navOffset={isConsole ? "left-[296px]" : "left-5"}
+      navOffset={isConsole ? "left-[256px]" : "left-5"}
     />
   );
 
@@ -211,7 +211,7 @@ export default function App() {
           <div className={`transition-opacity duration-300 ${openWidget ? "opacity-10" : "opacity-100"}`}>
             {topBar}
           </div>
-          <div className={`absolute left-0 top-0 bottom-0 w-[280px] z-30 transition-opacity duration-300 ${openWidget ? "opacity-10" : "opacity-100"}`}>
+          <div className={`absolute left-0 top-0 bottom-0 w-[240px] z-30 transition-opacity duration-300 ${openWidget ? "opacity-10" : "opacity-100"}`}>
             <ConsoleSidebar items={items} selectedId={effectiveSelected} onSelect={setSelectedId} onExpand={() => setInspectorOpen(true)} />
           </div>
 
@@ -219,17 +219,17 @@ export default function App() {
           <div className="absolute inset-0 z-[5]" onClick={() => setInspectorOpen(false)} />
 
           {/* Main area: clock + quote between sidebar and inspector */}
-          <main className={`absolute top-0 bottom-9 left-[280px] ${inspectorOpen ? "right-[440px]" : "right-0"} flex flex-col items-center justify-center px-6 z-10 pointer-events-none`}>
+          <main className={`absolute top-0 bottom-9 left-[240px] ${inspectorOpen ? "right-[380px]" : "right-0"} flex flex-col items-center justify-center px-6 z-10 pointer-events-none`}>
             {hero}
           </main>
 
           {/* Dock scoped to the main area (rides higher to clear the status bar) */}
-          <div className={`absolute top-0 bottom-0 left-[280px] ${inspectorOpen ? "right-[440px]" : "right-0"} transition-opacity duration-300 ${openWidget ? "opacity-10" : "opacity-100"}`}>
+          <div className={`absolute top-0 bottom-0 left-[240px] ${inspectorOpen ? "right-[380px]" : "right-0"} transition-opacity duration-300 ${openWidget ? "opacity-10" : "opacity-100"}`}>
             <Dock onOpenAll={() => setShortcutsOpen(true)} bottom="bottom-14" />
           </div>
 
           {inspectorOpen && (
-            <div className={`absolute right-5 top-20 bottom-14 w-[400px] z-30 transition-opacity duration-300 ${openWidget ? "opacity-10" : "opacity-100"}`}>
+            <div className={`absolute right-5 top-20 bottom-14 w-[340px] z-30 transition-opacity duration-300 ${openWidget ? "opacity-10" : "opacity-100"}`}>
               <Inspector id={effectiveSelected} onToggle={() => setInspectorOpen(false)} />
             </div>
           )}
@@ -249,7 +249,7 @@ export default function App() {
           )}
 
           {/* Status bar (recedes with everything else while a modal is open) */}
-          <footer className={`absolute left-[280px] right-0 bottom-0 h-9 z-40 flex items-center justify-between px-5 border-t border-white/10 font-mono text-[11px] text-white/35 transition-opacity duration-300 ${openWidget ? "opacity-10" : "opacity-100"}`}
+          <footer className={`absolute left-[240px] right-0 bottom-0 h-9 z-40 flex items-center justify-between px-5 border-t border-white/10 font-mono text-[11px] text-white/35 transition-opacity duration-300 ${openWidget ? "opacity-10" : "opacity-100"}`}
             style={{ background: "rgba(0,0,0,0.62)", backdropFilter: "blur(24px)", WebkitBackdropFilter: "blur(24px)" }}>
             <span>
               <span className="text-white/60">console</span>
